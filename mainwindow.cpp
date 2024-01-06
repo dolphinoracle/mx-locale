@@ -66,29 +66,31 @@ void MainWindow::setup()
 }
 
 void MainWindow::buildLocaleList(){
-    QFile myTextFile;
-    QStringList myStringList;
+    QFile libFile("/usr/lib/mx-locale/locale.lib");
+    QStringList libFileList;
     QString localelist;
     QStringList availablelocales;
     localelist = cmd->getOut("locale --all-locales");
     availablelocales = localelist.split(QRegExp("(\\r\\n)|(\\n\\r)|\\r|\\n"), Qt::SkipEmptyParts);
+
+
+
+
+    if (!libFile.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::information(0, "Error opening file", "Could not open locale.lib");
+    }
+    else
+    {
+        while(!libFile.atEnd())
+        {
+            libFileList.append(libFile.readLine());
+        }
+
+        libFile.close();
+    }
+    libFileList.removeDuplicates();
     ui->listWidgetAvailableLocales->addItems(availablelocales);
-
-
-
-//    if (!myTextFile.open(QIODevice::ReadOnly))
-//    {
-//        QMessageBox::information(0, "Error opening file", myTextFile.errorString());
-//    }
-//    else
-//    {
-//        while(!myTextFile.atEnd())
-//        {
-//            myStringList.append(myTextFile.readLine());
-//        }
-
-//        myTextFile.close();
-//    }
 }
 
 // cleanup environment when window is closed
