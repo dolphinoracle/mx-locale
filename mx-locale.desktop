@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=MX Locale
+Comment=Set language and locale variables
+Exec=mx-locale
+Terminal=false
+Type=Application
+Icon=formatusb
+Categories=System;MX-Setup;X-antiX;
+NoDisplay=false
