@@ -48,19 +48,12 @@ public:
 
     void makeUsb(const QString &options);
     void setup();
-    QString buildOptionList();
-    QStringList buildUsbList();
-    void validate_name();
-    QStringList removeUnsuitable(const QStringList &devices); // remove unsuitable disks from the list (live and unremovable)
+    void buildLocaleList();
 
 private slots:
     void cleanup();
     void on_buttonAbout_clicked();
     void on_buttonHelp_clicked();
-
-    void on_lineEditFSlabel_textChanged(const QString &arg1);
-
-    void on_comboBoxDataFormat_currentIndexChanged(int index);
 
 private:
     Ui::MainWindow *ui;

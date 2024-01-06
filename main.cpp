@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     qtTran.load(QString("qt_") + QLocale::system().name());
     a.installTranslator(&qtTran);
 
-    QString log_name= "/tmp/formatusb.log";
+    QString log_name= "/tmp/mx-locale.log";
     // Set the logging files
     logFile.reset(new QFile(log_name));
     // Open the file logging
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     qInstallMessageHandler(messageHandler);
 
     QTranslator appTran;
-    appTran.load(QString("formatusb_") + QLocale::system().name(), "/usr/share/formatusb/locale");
+    appTran.load(QString("mx-locale_") + QLocale::system().name(), "/usr/share/mx-locale/locale");
     a.installTranslator(&appTran);
 
     qDebug() << "Program Version:" << VERSION;
