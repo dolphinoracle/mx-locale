@@ -25,7 +25,7 @@ CONFIG   += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = formatusb
+TARGET = mx-locale
 TEMPLATE = app
 
 
@@ -43,7 +43,7 @@ HEADERS  += \
 FORMS    += \
     mainwindow.ui
 
-TRANSLATIONS += translations/formatusb_en.ts \
+TRANSLATIONS += translations/mx-locale_en.ts \
                 
 
 RESOURCES += \

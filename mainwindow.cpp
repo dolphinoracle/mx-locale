@@ -34,6 +34,7 @@
 
 #include <QDebug>
 #include <unistd.h>
+#include <cmd.h>
 
 MainWindow::MainWindow()  :
     ui(new Ui::MainWindow)
@@ -42,7 +43,6 @@ MainWindow::MainWindow()  :
     ui->setupUi(this);
     setWindowFlags(Qt::Window); // for the close, min and max buttons
     setup();
-    ui->comboBoxUsbList->addItems(buildUsbList());
     this->adjustSize();
 }
 
@@ -58,10 +58,37 @@ void MainWindow::setup()
     cmdprog = new Cmd(this);
     connect(qApp, &QApplication::aboutToQuit, this, &MainWindow::cleanup);
     this->setWindowTitle("MX Locale");
+    buildLocaleList();
     ui->stackedWidget->setCurrentIndex(0);
     ui->buttonCancel->setEnabled(true);
     height = this->heightMM();
 
+}
+
+void MainWindow::buildLocaleList(){
+    QFile myTextFile;
+    QStringList myStringList;
+    QString localelist;
+    QStringList availablelocales;
+    localelist = cmd->getOut("locale --all-locales");
+    availablelocales = localelist.split(QRegExp("(\\r\\n)|(\\n\\r)|\\r|\\n"), Qt::SkipEmptyParts);
+    ui->listWidgetAvailableLocales->addItems(availablelocales);
+
+
+
+//    if (!myTextFile.open(QIODevice::ReadOnly))
+//    {
+//        QMessageBox::information(0, "Error opening file", myTextFile.errorString());
+//    }
+//    else
+//    {
+//        while(!myTextFile.atEnd())
+//        {
+//            myStringList.append(myTextFile.readLine());
+//        }
+
+//        myTextFile.close();
+//    }
 }
 
 // cleanup environment when window is closed
@@ -81,14 +108,14 @@ void MainWindow::on_buttonAbout_clicked()
                        tr("Program for formatting USB devices") +
                        "</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br /></p><p align=\"center\">" +
                        tr("Copyright (c) MX Linux") + "<br /><br /></p>",
-                       "/usr/share/doc/formatusb/license.html", tr("%1 License").arg(this->windowTitle()), true);
+                       "/usr/share/doc/mx-locale/license.html", tr("%1 License").arg(this->windowTitle()), true);
     this->show();
 }
 
 // Help button clicked
 void MainWindow::on_buttonHelp_clicked()
 {
-    QString url = "file:///usr/share/doc/formatusb/help/mx-locale.html";
+    QString url = "file:///usr/share/doc/mx-locale/help/mx-locale.html";
     displayDoc(url, tr("%1 Help").arg(this->windowTitle()), true);
 }
 
