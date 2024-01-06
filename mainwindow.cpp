@@ -1,7 +1,7 @@
 /**********************************************************************
  *  mainwindow.cpp
  **********************************************************************
- * Copyright (C) 2019 MX Authors
+ * Copyright (C) 2024 MX Authors
  *
  * Authors: Dolphin Oracle
  *          MX Linux <http://mxlinux.org>
@@ -22,27 +22,26 @@
  * along with this package. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************/
 
-
-#include "about.h"
 #include "mainwindow.h"
+#include "about.h"
 #include "ui_mainwindow.h"
 #include "version.h"
 
+#include <QDebug>
 #include <QFileDialog>
 #include <QScrollBar>
 #include <QTextStream>
 
-#include <QDebug>
+#include "choosedialog.h"
+#include "cmd.h"
 #include <unistd.h>
-#include <cmd.h>
-#include <choosedialog.h>
 
-MainWindow::MainWindow()  :
-    ui(new Ui::MainWindow)
+MainWindow::MainWindow()
+    : ui(new Ui::MainWindow)
 {
     qDebug().noquote() << QCoreApplication::applicationName() << "version:" << VERSION;
     ui->setupUi(this);
-    setWindowFlags(Qt::Window); // for the close, min and max buttons
+    setWindowFlags(Qt::Window); // For the close, min and max buttons
     setup();
     this->adjustSize();
 }
@@ -52,7 +51,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// setup versious items first time program runs
+// Setup versious items first time program runs
 void MainWindow::setup()
 {
     cmd = new Cmd(this);
@@ -66,51 +65,50 @@ void MainWindow::setup()
     setsubvariables();
 }
 
-// cleanup environment when window is closed
+// Cleanup environment when window is closed
 void MainWindow::cleanup()
 {
     QString log_name = "/tmp/mx-locale.log";
     system("[ -f " + log_name.toUtf8() + " ] && rm " + log_name.toUtf8());
 }
 
-
-// About button clicked
 void MainWindow::on_buttonAbout_clicked()
 {
     this->hide();
-    displayAboutMsgBox(tr("About %1").arg(this->windowTitle()), "<p align=\"center\"><b><h2>" + this->windowTitle() +"</h2></b></p><p align=\"center\">" +
-                       tr("Version: ") + VERSION + "</p><p align=\"center\"><h3>" +
-                       tr("Program for formatting USB devices") +
-                       "</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br /></p><p align=\"center\">" +
-                       tr("Copyright (c) MX Linux") + "<br /><br /></p>",
+    displayAboutMsgBox(tr("About %1").arg(this->windowTitle()),
+                       "<p align=\"center\"><b><h2>" + this->windowTitle() + "</h2></b></p><p align=\"center\">"
+                           + tr("Version: ") + VERSION + "</p><p align=\"center\"><h3>"
+                           + tr("Program for formatting USB devices")
+                           + "</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br "
+                             "/></p><p align=\"center\">"
+                           + tr("Copyright (c) MX Linux") + "<br /><br /></p>",
                        "/usr/share/doc/mx-locale/license.html", tr("%1 License").arg(this->windowTitle()), true);
     this->show();
 }
 
-// Help button clicked
 void MainWindow::on_buttonHelp_clicked()
 {
     QString url = "file:///usr/share/doc/mx-locale/help/mx-locale.html";
     displayDoc(url, tr("%1 Help").arg(this->windowTitle()), true);
 }
 
-//get current language
-void MainWindow::getcurrentlang(){
+// Get current language
+void MainWindow::getcurrentlang()
+{
 
     if (QFileInfo::exists(QStringLiteral("/etc/default/locale"))) {
         QSettings defaultlocale(QStringLiteral("/etc/default/locale"), QSettings::NativeFormat);
         QString lang = defaultlocale.value(QStringLiteral("LANG")).toString();
-        if (lang.isEmpty()){
+        if (lang.isEmpty()) {
             lang = "C";
         }
 
         ui->buttonLocale->setText(lang);
-
     }
-
 }
 
-void MainWindow::setsubvariables(){
+void MainWindow::setsubvariables()
+{
 
     if (QFileInfo::exists(QStringLiteral("/etc/default/locale"))) {
         QSettings defaultlocale(QStringLiteral("/etc/default/locale"), QSettings::NativeFormat);
@@ -118,54 +116,53 @@ void MainWindow::setsubvariables(){
         QString lang = ui->buttonLocale->text();
 
         QString ctype = defaultlocale.value(QStringLiteral("LC_CTYPE")).toString();
-        if (ctype.isEmpty()){
+        if (ctype.isEmpty()) {
             ctype = lang;
         }
         QString numeric = defaultlocale.value(QStringLiteral("LC_NUMERIC")).toString();
-        if (numeric.isEmpty()){
+        if (numeric.isEmpty()) {
             numeric = lang;
         }
         QString time = defaultlocale.value(QStringLiteral("LC_TIME")).toString();
-        if (time.isEmpty()){
+        if (time.isEmpty()) {
             time = lang;
         }
         QString collate = defaultlocale.value(QStringLiteral("LC_COLLATE")).toString();
-        if (collate.isEmpty()){
+        if (collate.isEmpty()) {
             collate = lang;
         }
         QString monetary = defaultlocale.value(QStringLiteral("LC_MONETARY")).toString();
-        if (monetary.isEmpty()){
+        if (monetary.isEmpty()) {
             monetary = lang;
         }
         QString messages = defaultlocale.value(QStringLiteral("LC_MESSAGES")).toString();
-        if (messages.isEmpty()){
+        if (messages.isEmpty()) {
             messages = lang;
         }
         QString paper = defaultlocale.value(QStringLiteral("LC_PAPER")).toString();
-        if (paper.isEmpty()){
+        if (paper.isEmpty()) {
             paper = lang;
         }
         QString name = defaultlocale.value(QStringLiteral("LC_NAME")).toString();
-        if (name.isEmpty()){
+        if (name.isEmpty()) {
             name = lang;
         }
         QString address = defaultlocale.value(QStringLiteral("LC_ADDRESS")).toString();
-        if (address.isEmpty()){
+        if (address.isEmpty()) {
             address = lang;
         }
         QString telephone = defaultlocale.value(QStringLiteral("LC_TELEPHONE")).toString();
-        if (telephone.isEmpty()){
+        if (telephone.isEmpty()) {
             telephone = lang;
         }
         QString measurement = defaultlocale.value(QStringLiteral("LC_MEASUREMENT")).toString();
-        if (measurement.isEmpty()){
+        if (measurement.isEmpty()) {
             measurement = lang;
         }
         QString identification = defaultlocale.value(QStringLiteral("LC_IDENTIFICATION")).toString();
-        if (identification.isEmpty()){
+        if (identification.isEmpty()) {
             identification = lang;
         }
-
 
         ui->pushButtonCType->setText(ctype);
         ui->pushButtonNumeric->setText(numeric);
@@ -186,154 +183,116 @@ void MainWindow::on_buttonLocale_clicked()
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if(dialog.exec() == QDialog::Accepted)
-        {
-          ui->buttonLocale->setText(dialog.selection());
-          setsubvariables();
-        }
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->buttonLocale->setText(dialog.selection());
+        setsubvariables();
+    }
 }
-
 
 void MainWindow::on_pushButtonCType_clicked()
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if(dialog.exec() == QDialog::Accepted)
-        {
-          ui->pushButtonCType->setText(dialog.selection());
-
-        }
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->pushButtonCType->setText(dialog.selection());
+    }
 }
-
 
 void MainWindow::on_pushButtonNumeric_clicked()
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if(dialog.exec() == QDialog::Accepted)
-        {
-          ui->pushButtonNumeric->setText(dialog.selection());
-
-        }
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->pushButtonNumeric->setText(dialog.selection());
+    }
 }
-
 
 void MainWindow::on_pushButtonTime_clicked()
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if(dialog.exec() == QDialog::Accepted)
-        {
-          ui->pushButtonTime->setText(dialog.selection());
-
-        }
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->pushButtonTime->setText(dialog.selection());
+    }
 }
-
 
 void MainWindow::on_pushButtonCollate_clicked()
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if(dialog.exec() == QDialog::Accepted)
-        {
-          ui->pushButtonCollate->setText(dialog.selection());
-
-        }
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->pushButtonCollate->setText(dialog.selection());
+    }
 }
-
 
 void MainWindow::on_pushButtonMonetary_clicked()
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if(dialog.exec() == QDialog::Accepted)
-        {
-          ui->pushButtonMonetary->setText(dialog.selection());
-
-        }
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->pushButtonMonetary->setText(dialog.selection());
+    }
 }
-
 
 void MainWindow::on_pushButtonMessages_clicked()
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if(dialog.exec() == QDialog::Accepted)
-        {
-          ui->pushButtonMessages->setText(dialog.selection());
-
-        }
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->pushButtonMessages->setText(dialog.selection());
+    }
 }
-
 
 void MainWindow::on_pushButtonPaper_clicked()
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if(dialog.exec() == QDialog::Accepted)
-        {
-          ui->pushButtonPaper->setText(dialog.selection());
-
-        }
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->pushButtonPaper->setText(dialog.selection());
+    }
 }
-
 
 void MainWindow::on_pushButtonName_clicked()
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if(dialog.exec() == QDialog::Accepted)
-        {
-          ui->pushButtonName->setText(dialog.selection());
-
-        }
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->pushButtonName->setText(dialog.selection());
+    }
 }
-
 
 void MainWindow::on_pushButtonAddress_clicked()
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if(dialog.exec() == QDialog::Accepted)
-        {
-          ui->pushButtonAddress->setText(dialog.selection());
-
-        }
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->pushButtonAddress->setText(dialog.selection());
+    }
 }
-
 
 void MainWindow::on_pushButtonTelephone_clicked()
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if(dialog.exec() == QDialog::Accepted)
-        {
-          ui->pushButtonTelephone->setText(dialog.selection());
-
-        }
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->pushButtonTelephone->setText(dialog.selection());
+    }
 }
-
 
 void MainWindow::on_pushButtonMeasurement_clicked()
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if(dialog.exec() == QDialog::Accepted)
-        {
-          ui->pushButtonMeasurement->setText(dialog.selection());
-
-        }
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->pushButtonMeasurement->setText(dialog.selection());
+    }
 }
-
 
 void MainWindow::on_pushButtonIdentification_clicked()
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if(dialog.exec() == QDialog::Accepted)
-        {
-          ui->pushButtonIdentification->setText(dialog.selection());
-
-        }
+    if (dialog.exec() == QDialog::Accepted) {
+        ui->pushButtonIdentification->setText(dialog.selection());
+    }
 }
-

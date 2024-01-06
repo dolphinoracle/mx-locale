@@ -1,5 +1,5 @@
 # **********************************************************************
-# * Copyright (C) 2017 MX Authors
+# * Copyright (C) 2024 MX Authors
 # *
 # * Authors: Dolphin Oracle
 # *          MX Linux <http://mxlinux.org>
@@ -20,10 +20,8 @@
 # * along with this package. If not, see <http://www.gnu.org/licenses/>.
 # **********************************************************************/
 
-QT       += core gui
-CONFIG   += c++11
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui widgets
+CONFIG   += c++1z
 
 TARGET = mx-locale
 TEMPLATE = app
@@ -46,8 +44,8 @@ FORMS    += \
     choosedialog.ui \
     mainwindow.ui
 
-TRANSLATIONS += translations/mx-locale_en.ts \
-                
+TRANSLATIONS += translations/mx-locale_en.ts
+
 
 RESOURCES += \
     images.qrc

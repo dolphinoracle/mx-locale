@@ -1,7 +1,7 @@
 /**********************************************************************
  *  main.cpp
  **********************************************************************
- * Copyright (C) 2019 MX Authors
+ * Copyright (C) 2024 MX Authors
  *
  * Authors: Dolphin Oracle
  *          MX Linux <http://mxlinux.org>
@@ -24,16 +24,15 @@
 
 #include <QApplication>
 #include <QDateTime>
+#include <QDebug>
 #include <QIcon>
 #include <QLocale>
 #include <QScopedPointer>
 #include <QTranslator>
-#include <QDebug>
 
 #include "mainwindow.h"
-#include <version.h>
 #include <unistd.h>
-
+#include <version.h>
 
 QScopedPointer<QFile> logFile;
 void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
@@ -42,9 +41,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    if (a.arguments().contains("--version") || a.arguments().contains("-v") ) {
-       qDebug() << "Version:" << VERSION;
-       return EXIT_SUCCESS;
+    if (a.arguments().contains("--version") || a.arguments().contains("-v")) {
+        qDebug() << "Version:" << VERSION;
+        return EXIT_SUCCESS;
     }
 
     a.setWindowIcon(QIcon::fromTheme("media-removable"));
@@ -53,7 +52,7 @@ int main(int argc, char *argv[])
     qtTran.load(QString("qt_") + QLocale::system().name());
     a.installTranslator(&qtTran);
 
-    QString log_name= "/tmp/mx-locale.log";
+    QString log_name = "/tmp/mx-locale.log";
     // Set the logging files
     logFile.reset(new QFile(log_name));
     // Open the file logging
@@ -67,11 +66,10 @@ int main(int argc, char *argv[])
 
     qDebug() << "Program Version:" << VERSION;
 
-        MainWindow w;
-        w.show();
-        return a.exec();
+    MainWindow w;
+    w.show();
+    return a.exec();
 }
-
 
 // The implementation of the handler
 void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
@@ -86,16 +84,25 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
     // Write the date of recording
     out << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz ");
     // By type determine to what level belongs message
-    switch (type)
-    {
-    //case QtInfoMsg:     out << "INF "; break; Not in older Qt versions
-    case QtDebugMsg:    out << "DBG "; break;
-    case QtWarningMsg:  out << "WRN "; break;
-    case QtCriticalMsg: out << "CRT "; break;
-    case QtFatalMsg:    out << "FTL "; break;
-    default:            out << "OTH"; break;
+    switch (type) {
+    // case QtInfoMsg:     out << "INF "; break; Not in older Qt versions
+    case QtDebugMsg:
+        out << "DBG ";
+        break;
+    case QtWarningMsg:
+        out << "WRN ";
+        break;
+    case QtCriticalMsg:
+        out << "CRT ";
+        break;
+    case QtFatalMsg:
+        out << "FTL ";
+        break;
+    default:
+        out << "OTH";
+        break;
     }
     // Write to the output category of the message and the message itself
     out << context.category << ": " << msg << "\n";
-    out.flush();    // Clear the buffered data
+    out.flush(); // Clear the buffered data
 }

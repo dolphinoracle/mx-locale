@@ -1,10 +1,10 @@
-#ifndef CHOOSEDIALOG_H
-#define CHOOSEDIALOG_H
+#pragma once
 
 #include <QDialog>
 #include <cmd.h>
 
-namespace Ui {
+namespace Ui
+{
 class chooseDialog;
 }
 
@@ -21,12 +21,9 @@ public:
 
 private slots:
 
-
 private:
     Ui::chooseDialog *ui;
     Cmd *cmd;
     Cmd *cmdprog;
     QString value;
 };
-
-#endif // CHOOSEDIALOG_H

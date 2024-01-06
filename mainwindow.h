@@ -1,7 +1,7 @@
 /**********************************************************************
  *  mainwindow.h
  **********************************************************************
- * Copyright (C) 2019 MX Authors
+ * Copyright (C) 2024 MX Authors
  *
  * Authors: Dolphin Oracle
  *          MX Linux <http://mxlinux.org>
@@ -22,19 +22,18 @@
  * along with this package. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************/
 
-
-
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QFile>
 #include <QMessageBox>
 #include <QProcess>
 #include <QSettings>
-#include <QFile>
 
 #include <cmd.h>
 
-namespace Ui {
+namespace Ui
+{
 class MainWindow;
 }
 
@@ -90,6 +89,4 @@ private:
     int height;
 };
 
-
 #endif
-

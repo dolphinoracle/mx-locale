@@ -8,8 +8,8 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 
-// display doc as nomal user when run as root
-void displayDoc(QString url, QString title, bool runned_as_root)
+// Display doc as nomal user when run as root
+void displayDoc(const QString &url, const QString &title, bool runned_as_root)
 {
     if (system("command -v mx-viewer >/dev/null") == 0) {
         system("mx-viewer " + url.toUtf8() + " \"" + title.toUtf8() + "\"&");
@@ -21,13 +21,14 @@ void displayDoc(QString url, QString title, bool runned_as_root)
         return;
     }
 
-    if (!runned_as_root)
+    if (!runned_as_root) {
         system("xdg-open " + url.toUtf8());
-    else
+    } else {
         system("su $(logname) -c \"env XDG_RUNTIME_DIR=/run/user/$(id -u $(logname)) xdg-open " + url.toUtf8() + "\"&");
+    }
 }
 
-void displayAboutMsgBox(QString title, QString message, QString licence_url, QString license_title, bool runned_as_root)
+void displayAboutMsgBox(const QString &title, const QString &message, const QString &licence_url, const QString &license_title, bool runned_as_root)
 {
     QMessageBox msgBox(QMessageBox::NoIcon, title, message);
     QPushButton *btnLicense = msgBox.addButton(QObject::tr("License"), QMessageBox::HelpRole);
@@ -47,7 +48,8 @@ void displayAboutMsgBox(QString title, QString message, QString licence_url, QSt
         QTextEdit *text = new QTextEdit;
         text->setReadOnly(true);
         Cmd cmd;
-        text->setText(cmd.getOut("zless /usr/share/doc/" + QFileInfo(QCoreApplication::applicationFilePath()).fileName()  + "/changelog.gz"));
+        text->setText(cmd.getOut("zless /usr/share/doc/" + QFileInfo(QCoreApplication::applicationFilePath()).fileName()
+                                 + "/changelog.gz"));
 
         QPushButton *btnClose = new QPushButton(QObject::tr("&Close"));
         btnClose->setIcon(QIcon::fromTheme("window-close"));
@@ -58,6 +60,5 @@ void displayAboutMsgBox(QString title, QString message, QString licence_url, QSt
         layout->addWidget(btnClose);
         changelog->setLayout(layout);
         changelog->exec();
-        delete changelog;
     }
 }
