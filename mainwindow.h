@@ -48,6 +48,7 @@ public:
     void setup();
     void makeUsb(const QString &options);
     void getcurrentlang();
+    void setsubvariables();
 
 private slots:
     void cleanup();

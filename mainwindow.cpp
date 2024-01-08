@@ -63,6 +63,7 @@ void MainWindow::setup()
     ui->buttonCancel->setEnabled(true);
     height = this->heightMM();
     getcurrentlang();
+    setsubvariables();
 }
 
 // cleanup environment when window is closed
@@ -102,6 +103,20 @@ void MainWindow::getcurrentlang(){
         if (lang.isEmpty()){
             lang = "C";
         }
+
+        ui->buttonLocale->setText(lang);
+
+    }
+
+}
+
+void MainWindow::setsubvariables(){
+
+    if (QFileInfo::exists(QStringLiteral("/etc/default/locale"))) {
+        QSettings defaultlocale(QStringLiteral("/etc/default/locale"), QSettings::NativeFormat);
+
+        QString lang = ui->buttonLocale->text();
+
         QString ctype = defaultlocale.value(QStringLiteral("LC_CTYPE")).toString();
         if (ctype.isEmpty()){
             ctype = lang;
@@ -151,7 +166,7 @@ void MainWindow::getcurrentlang(){
             identification = lang;
         }
 
-        ui->buttonLocale->setText(lang);
+
         ui->pushButtonCType->setText(ctype);
         ui->pushButtonNumeric->setText(numeric);
         ui->pushButtonTime->setText(time);
@@ -164,8 +179,7 @@ void MainWindow::getcurrentlang(){
         ui->pushButtonTelephone->setText(telephone);
         ui->pushButtonMeasurement->setText(measurement);
         ui->pushButtonIdentification->setText(identification);
-     }
-
+    }
 }
 
 void MainWindow::on_buttonLocale_clicked()
@@ -175,7 +189,7 @@ void MainWindow::on_buttonLocale_clicked()
     if(dialog.exec() == QDialog::Accepted)
         {
           ui->buttonLocale->setText(dialog.selection());
-
+          setsubvariables();
         }
 }
 
