@@ -31,7 +31,7 @@
      </property>
      <widget class="QWidget" name="selectionPage">
       <layout class="QGridLayout" name="gridLayout_4">
-       <item row="2" column="0">
+       <item row="2" column="1">
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -44,8 +44,19 @@
          </property>
         </spacer>
        </item>
-       <item row="0" column="0">
-        <widget class="QListWidget" name="listWidgetAvailableLocales"/>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="buttonLocale">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Current Language</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

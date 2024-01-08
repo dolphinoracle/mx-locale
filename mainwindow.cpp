@@ -35,6 +35,7 @@
 #include <QDebug>
 #include <unistd.h>
 #include <cmd.h>
+#include <choosedialog.h>
 
 MainWindow::MainWindow()  :
     ui(new Ui::MainWindow)
@@ -58,39 +59,10 @@ void MainWindow::setup()
     cmdprog = new Cmd(this);
     connect(qApp, &QApplication::aboutToQuit, this, &MainWindow::cleanup);
     this->setWindowTitle("MX Locale");
-    buildLocaleList();
     ui->stackedWidget->setCurrentIndex(0);
     ui->buttonCancel->setEnabled(true);
     height = this->heightMM();
-
-}
-
-void MainWindow::buildLocaleList(){
-    QFile libFile("/usr/lib/mx-locale/locale.lib");
-    QStringList libFileList;
-    QString localelist;
-    QStringList availablelocales;
-    localelist = cmd->getOut("locale --all-locales");
-    availablelocales = localelist.split(QRegExp("(\\r\\n)|(\\n\\r)|\\r|\\n"), Qt::SkipEmptyParts);
-
-
-
-
-    if (!libFile.open(QIODevice::ReadOnly))
-    {
-        QMessageBox::information(0, "Error opening file", "Could not open locale.lib");
-    }
-    else
-    {
-        while(!libFile.atEnd())
-        {
-            libFileList.append(libFile.readLine());
-        }
-
-        libFile.close();
-    }
-    libFileList.removeDuplicates();
-    ui->listWidgetAvailableLocales->addItems(availablelocales);
+    getcurrentlang();
 }
 
 // cleanup environment when window is closed
@@ -119,5 +91,22 @@ void MainWindow::on_buttonHelp_clicked()
 {
     QString url = "file:///usr/share/doc/mx-locale/help/mx-locale.html";
     displayDoc(url, tr("%1 Help").arg(this->windowTitle()), true);
+}
+
+//get current language
+void MainWindow::getcurrentlang(){
+    QString LANG = cmd->getOut("grep ^LANG /etc/default/locale").section("=",1,1);
+    ui->buttonLocale->setText(LANG);
+}
+
+void MainWindow::on_buttonLocale_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->buttonLocale->setText(dialog.selection());
+
+        }
 }
 
