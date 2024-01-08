@@ -35,6 +35,7 @@
 #include <QDebug>
 #include <unistd.h>
 #include <cmd.h>
+#include <choosedialog.h>
 
 MainWindow::MainWindow()  :
     ui(new Ui::MainWindow)
@@ -58,39 +59,10 @@ void MainWindow::setup()
     cmdprog = new Cmd(this);
     connect(qApp, &QApplication::aboutToQuit, this, &MainWindow::cleanup);
     this->setWindowTitle("MX Locale");
-    buildLocaleList();
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->tabWidget->setCurrentIndex(0);
     ui->buttonCancel->setEnabled(true);
     height = this->heightMM();
-
-}
-
-void MainWindow::buildLocaleList(){
-    QFile libFile("/usr/lib/mx-locale/locale.lib");
-    QStringList libFileList;
-    QString localelist;
-    QStringList availablelocales;
-    localelist = cmd->getOut("locale --all-locales");
-    availablelocales = localelist.split(QRegExp("(\\r\\n)|(\\n\\r)|\\r|\\n"), Qt::SkipEmptyParts);
-
-
-
-
-    if (!libFile.open(QIODevice::ReadOnly))
-    {
-        QMessageBox::information(0, "Error opening file", "Could not open locale.lib");
-    }
-    else
-    {
-        while(!libFile.atEnd())
-        {
-            libFileList.append(libFile.readLine());
-        }
-
-        libFile.close();
-    }
-    libFileList.removeDuplicates();
-    ui->listWidgetAvailableLocales->addItems(availablelocales);
+    getcurrentlang();
 }
 
 // cleanup environment when window is closed
@@ -119,5 +91,91 @@ void MainWindow::on_buttonHelp_clicked()
 {
     QString url = "file:///usr/share/doc/mx-locale/help/mx-locale.html";
     displayDoc(url, tr("%1 Help").arg(this->windowTitle()), true);
+}
+
+//get current language
+void MainWindow::getcurrentlang(){
+
+    if (QFileInfo::exists(QStringLiteral("/etc/default/locale"))) {
+        QSettings defaultlocale(QStringLiteral("/etc/default/locale"), QSettings::NativeFormat);
+        QString lang = defaultlocale.value(QStringLiteral("LANG")).toString();
+        if (lang.isEmpty()){
+            lang = "C";
+        }
+        QString ctype = defaultlocale.value(QStringLiteral("LC_CTYPE")).toString();
+        if (ctype.isEmpty()){
+            ctype = lang;
+        }
+        QString numeric = defaultlocale.value(QStringLiteral("LC_NUMERIC")).toString();
+        if (numeric.isEmpty()){
+            numeric = lang;
+        }
+        QString time = defaultlocale.value(QStringLiteral("LC_TIME")).toString();
+        if (time.isEmpty()){
+            time = lang;
+        }
+        QString collate = defaultlocale.value(QStringLiteral("LC_COLLATE")).toString();
+        if (collate.isEmpty()){
+            collate = lang;
+        }
+        QString monetary = defaultlocale.value(QStringLiteral("LC_MONETARY")).toString();
+        if (monetary.isEmpty()){
+            monetary = lang;
+        }
+        QString messages = defaultlocale.value(QStringLiteral("LC_MESSAGES")).toString();
+        if (messages.isEmpty()){
+            messages = lang;
+        }
+        QString paper = defaultlocale.value(QStringLiteral("LC_PAPER")).toString();
+        if (paper.isEmpty()){
+            paper = lang;
+        }
+        QString name = defaultlocale.value(QStringLiteral("LC_NAME")).toString();
+        if (name.isEmpty()){
+            name = lang;
+        }
+        QString address = defaultlocale.value(QStringLiteral("LC_ADDRESS")).toString();
+        if (address.isEmpty()){
+            address = lang;
+        }
+        QString telephone = defaultlocale.value(QStringLiteral("LC_TELEPHONE")).toString();
+        if (telephone.isEmpty()){
+            telephone = lang;
+        }
+        QString measurement = defaultlocale.value(QStringLiteral("LC_MEASUREMENT")).toString();
+        if (measurement.isEmpty()){
+            measurement = lang;
+        }
+        QString identification = defaultlocale.value(QStringLiteral("LC_IDENTIFICATION")).toString();
+        if (identification.isEmpty()){
+            identification = lang;
+        }
+
+        ui->buttonLocale->setText(lang);
+        ui->pushButtonCType->setText(ctype);
+        ui->pushButtonNumeric->setText(numeric);
+        ui->pushButtonTime->setText(time);
+        ui->pushButtonCollate->setText(collate);
+        ui->pushButtonMonetary->setText(monetary);
+        ui->pushButtonMessages->setText(messages);
+        ui->pushButtonPaper->setText(paper);
+        ui->pushButtonName->setText(name);
+        ui->pushButtonAddress->setText(address);
+        ui->pushButtonTelephone->setText(telephone);
+        ui->pushButtonMeasurement->setText(measurement);
+        ui->pushButtonIdentification->setText(identification);
+     }
+
+}
+
+void MainWindow::on_buttonLocale_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->buttonLocale->setText(dialog.selection());
+
+        }
 }
 

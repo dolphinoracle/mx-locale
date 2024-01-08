@@ -45,15 +45,16 @@ class MainWindow : public QDialog
 public:
     MainWindow();
     ~MainWindow();
-
-    void makeUsb(const QString &options);
     void setup();
-    void buildLocaleList();
+    void makeUsb(const QString &options);
+    void getcurrentlang();
 
 private slots:
     void cleanup();
     void on_buttonAbout_clicked();
     void on_buttonHelp_clicked();
+
+    void on_buttonLocale_clicked();
 
 private:
     Ui::MainWindow *ui;

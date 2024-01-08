@@ -30,17 +30,20 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
+    choosedialog.cpp \
     mainwindow.cpp \
     about.cpp \
     cmd.cpp
 
 HEADERS  += \
+    choosedialog.h \
     mainwindow.h \
     version.h \
     about.h \
     cmd.h
 
 FORMS    += \
+    choosedialog.ui \
     mainwindow.ui
 
 TRANSLATIONS += translations/mx-locale_en.ts \
