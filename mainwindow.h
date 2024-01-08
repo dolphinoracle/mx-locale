@@ -56,6 +56,30 @@ private slots:
 
     void on_buttonLocale_clicked();
 
+    void on_pushButtonCType_clicked();
+
+    void on_pushButtonNumeric_clicked();
+
+    void on_pushButtonTime_clicked();
+
+    void on_pushButtonCollate_clicked();
+
+    void on_pushButtonMonetary_clicked();
+
+    void on_pushButtonMessages_clicked();
+
+    void on_pushButtonPaper_clicked();
+
+    void on_pushButtonName_clicked();
+
+    void on_pushButtonAddress_clicked();
+
+    void on_pushButtonTelephone_clicked();
+
+    void on_pushButtonMeasurement_clicked();
+
+    void on_pushButtonIdentification_clicked();
+
 private:
     Ui::MainWindow *ui;
     Cmd *cmd;

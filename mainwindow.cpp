@@ -179,3 +179,147 @@ void MainWindow::on_buttonLocale_clicked()
         }
 }
 
+
+void MainWindow::on_pushButtonCType_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonCType->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonNumeric_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonNumeric->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonTime_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonTime->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonCollate_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonCollate->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonMonetary_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonMonetary->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonMessages_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonMessages->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonPaper_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonPaper->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonName_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonName->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonAddress_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonAddress->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonTelephone_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonTelephone->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonMeasurement_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonMeasurement->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonIdentification_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonIdentification->setText(dialog.selection());
+
+        }
+}
+
