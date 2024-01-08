@@ -63,6 +63,7 @@ void MainWindow::setup()
     ui->buttonCancel->setEnabled(true);
     height = this->heightMM();
     getcurrentlang();
+    setsubvariables();
 }
 
 // cleanup environment when window is closed
@@ -102,6 +103,20 @@ void MainWindow::getcurrentlang(){
         if (lang.isEmpty()){
             lang = "C";
         }
+
+        ui->buttonLocale->setText(lang);
+
+    }
+
+}
+
+void MainWindow::setsubvariables(){
+
+    if (QFileInfo::exists(QStringLiteral("/etc/default/locale"))) {
+        QSettings defaultlocale(QStringLiteral("/etc/default/locale"), QSettings::NativeFormat);
+
+        QString lang = ui->buttonLocale->text();
+
         QString ctype = defaultlocale.value(QStringLiteral("LC_CTYPE")).toString();
         if (ctype.isEmpty()){
             ctype = lang;
@@ -151,7 +166,7 @@ void MainWindow::getcurrentlang(){
             identification = lang;
         }
 
-        ui->buttonLocale->setText(lang);
+
         ui->pushButtonCType->setText(ctype);
         ui->pushButtonNumeric->setText(numeric);
         ui->pushButtonTime->setText(time);
@@ -164,8 +179,7 @@ void MainWindow::getcurrentlang(){
         ui->pushButtonTelephone->setText(telephone);
         ui->pushButtonMeasurement->setText(measurement);
         ui->pushButtonIdentification->setText(identification);
-     }
-
+    }
 }
 
 void MainWindow::on_buttonLocale_clicked()
@@ -175,6 +189,150 @@ void MainWindow::on_buttonLocale_clicked()
     if(dialog.exec() == QDialog::Accepted)
         {
           ui->buttonLocale->setText(dialog.selection());
+          setsubvariables();
+        }
+}
+
+
+void MainWindow::on_pushButtonCType_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonCType->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonNumeric_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonNumeric->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonTime_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonTime->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonCollate_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonCollate->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonMonetary_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonMonetary->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonMessages_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonMessages->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonPaper_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonPaper->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonName_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonName->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonAddress_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonAddress->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonTelephone_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonTelephone->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonMeasurement_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonMeasurement->setText(dialog.selection());
+
+        }
+}
+
+
+void MainWindow::on_pushButtonIdentification_clicked()
+{
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if(dialog.exec() == QDialog::Accepted)
+        {
+          ui->pushButtonIdentification->setText(dialog.selection());
 
         }
 }
