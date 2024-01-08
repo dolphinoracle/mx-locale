@@ -59,7 +59,7 @@ void MainWindow::setup()
     cmdprog = new Cmd(this);
     connect(qApp, &QApplication::aboutToQuit, this, &MainWindow::cleanup);
     this->setWindowTitle("MX Locale");
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->tabWidget->setCurrentIndex(0);
     ui->buttonCancel->setEnabled(true);
     height = this->heightMM();
     getcurrentlang();
@@ -95,8 +95,77 @@ void MainWindow::on_buttonHelp_clicked()
 
 //get current language
 void MainWindow::getcurrentlang(){
-    QString LANG = cmd->getOut("grep ^LANG /etc/default/locale").section("=",1,1);
-    ui->buttonLocale->setText(LANG);
+
+    if (QFileInfo::exists(QStringLiteral("/etc/default/locale"))) {
+        QSettings defaultlocale(QStringLiteral("/etc/default/locale"), QSettings::NativeFormat);
+        QString lang = defaultlocale.value(QStringLiteral("LANG")).toString();
+        if (lang.isEmpty()){
+            lang = "C";
+        }
+        QString ctype = defaultlocale.value(QStringLiteral("LC_CTYPE")).toString();
+        if (ctype.isEmpty()){
+            ctype = lang;
+        }
+        QString numeric = defaultlocale.value(QStringLiteral("LC_NUMERIC")).toString();
+        if (numeric.isEmpty()){
+            numeric = lang;
+        }
+        QString time = defaultlocale.value(QStringLiteral("LC_TIME")).toString();
+        if (time.isEmpty()){
+            time = lang;
+        }
+        QString collate = defaultlocale.value(QStringLiteral("LC_COLLATE")).toString();
+        if (collate.isEmpty()){
+            collate = lang;
+        }
+        QString monetary = defaultlocale.value(QStringLiteral("LC_MONETARY")).toString();
+        if (monetary.isEmpty()){
+            monetary = lang;
+        }
+        QString messages = defaultlocale.value(QStringLiteral("LC_MESSAGES")).toString();
+        if (messages.isEmpty()){
+            messages = lang;
+        }
+        QString paper = defaultlocale.value(QStringLiteral("LC_PAPER")).toString();
+        if (paper.isEmpty()){
+            paper = lang;
+        }
+        QString name = defaultlocale.value(QStringLiteral("LC_NAME")).toString();
+        if (name.isEmpty()){
+            name = lang;
+        }
+        QString address = defaultlocale.value(QStringLiteral("LC_ADDRESS")).toString();
+        if (address.isEmpty()){
+            address = lang;
+        }
+        QString telephone = defaultlocale.value(QStringLiteral("LC_TELEPHONE")).toString();
+        if (telephone.isEmpty()){
+            telephone = lang;
+        }
+        QString measurement = defaultlocale.value(QStringLiteral("LC_MEASUREMENT")).toString();
+        if (measurement.isEmpty()){
+            measurement = lang;
+        }
+        QString identification = defaultlocale.value(QStringLiteral("LC_IDENTIFICATION")).toString();
+        if (identification.isEmpty()){
+            identification = lang;
+        }
+
+        ui->buttonLocale->setText(lang);
+        ui->pushButtonCType->setText(ctype);
+        ui->pushButtonNumeric->setText(numeric);
+        ui->pushButtonTime->setText(time);
+        ui->pushButtonCollate->setText(collate);
+        ui->pushButtonMonetary->setText(monetary);
+        ui->pushButtonMessages->setText(messages);
+        ui->pushButtonPaper->setText(paper);
+        ui->pushButtonName->setText(name);
+        ui->pushButtonAddress->setText(address);
+        ui->pushButtonTelephone->setText(telephone);
+        ui->pushButtonMeasurement->setText(measurement);
+        ui->pushButtonIdentification->setText(identification);
+     }
+
 }
 
 void MainWindow::on_buttonLocale_clicked()
