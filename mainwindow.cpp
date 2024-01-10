@@ -36,8 +36,9 @@
 #include "cmd.h"
 #include <unistd.h>
 
-MainWindow::MainWindow()
-    : ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent)
+    : QDialog(parent),
+      ui(new Ui::MainWindow)
 {
     qDebug().noquote() << QCoreApplication::applicationName() << "version:" << VERSION;
     ui->setupUi(this);

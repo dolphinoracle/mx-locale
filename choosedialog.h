@@ -21,9 +21,12 @@ public:
 
 private slots:
 
+    void on_textSearch_textChanged(const QString &arg1);
+
 private:
     Ui::chooseDialog *ui;
     Cmd *cmd;
     Cmd *cmdprog;
     QString value;
+    QStringList availablelocales;
 };

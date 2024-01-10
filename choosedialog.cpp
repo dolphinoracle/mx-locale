@@ -31,7 +31,6 @@ void chooseDialog::buildLocaleList()
     QFile libFile("/usr/lib/mx-locale/locale.lib");
     QStringList libFileList;
     QString localelist;
-    QStringList availablelocales;
     localelist = cmd->getOut("locale --all-locales");
     availablelocales = localelist.split(QRegExp("(\\r\\n)|(\\n\\r)|\\r|\\n"), Qt::SkipEmptyParts);
 
@@ -51,4 +50,15 @@ void chooseDialog::buildLocaleList()
 QString chooseDialog::selection()
 {
     return ui->listWidgetAvailableLocales->currentItem()->text();
+}
+
+void chooseDialog::on_textSearch_textChanged(const QString & /*arg1*/)
+{
+    ui->listWidgetAvailableLocales->clear();
+
+    for (const QString &itemText : availablelocales) {
+        if (itemText.contains(ui->textSearch->text(), Qt::CaseInsensitive)) {
+            ui->listWidgetAvailableLocales->addItem(itemText);
+        }
+    }
 }
