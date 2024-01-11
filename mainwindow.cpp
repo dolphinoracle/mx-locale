@@ -100,48 +100,43 @@ void MainWindow::helpClicked()
 // Get current language
 void MainWindow::getCurrentLang()
 {
-
-    if (QFileInfo::exists("/etc/default/locale")) {
-        QSettings defaultlocale("/etc/default/locale", QSettings::NativeFormat);
-        QString lang = defaultlocale.value("LANG", "C").toString();
-        ui->buttonLocale->setText(lang);
-    }
+    QSettings defaultlocale("/etc/default/locale", QSettings::NativeFormat);
+    QString lang = defaultlocale.value("LANG", "C").toString();
+    ui->buttonLocale->setText(lang);
 }
 
 void MainWindow::setSubvariables()
 {
 
-    if (QFileInfo::exists("/etc/default/locale")) {
-        QSettings defaultlocale("/etc/default/locale", QSettings::NativeFormat);
+    QSettings defaultlocale("/etc/default/locale", QSettings::NativeFormat);
 
-        QString lang = ui->buttonLocale->text();
+    QString lang = ui->buttonLocale->text();
 
-        QString ctype = defaultlocale.value("LC_CTYPE", lang).toString();
-        QString numeric = defaultlocale.value("LC_NUMERIC", lang).toString();
-        QString time = defaultlocale.value("LC_TIME", lang).toString();
-        QString collate = defaultlocale.value("LC_COLLATE", lang).toString();
-        QString monetary = defaultlocale.value("LC_MONETARY", lang).toString();
-        QString messages = defaultlocale.value("LC_MESSAGES", lang).toString();
-        QString paper = defaultlocale.value("LC_PAPER", lang).toString();
-        QString name = defaultlocale.value("LC_NAME", lang).toString();
-        QString address = defaultlocale.value("LC_ADDRESS", lang).toString();
-        QString telephone = defaultlocale.value("LC_TELEPHONE", lang).toString();
-        QString measurement = defaultlocale.value("LC_MEASUREMENT", lang).toString();
-        QString identification = defaultlocale.value("LC_IDENTIFICATION", lang).toString();
+    QString ctype = defaultlocale.value("LC_CTYPE", lang).toString();
+    QString numeric = defaultlocale.value("LC_NUMERIC", lang).toString();
+    QString time = defaultlocale.value("LC_TIME", lang).toString();
+    QString collate = defaultlocale.value("LC_COLLATE", lang).toString();
+    QString monetary = defaultlocale.value("LC_MONETARY", lang).toString();
+    QString messages = defaultlocale.value("LC_MESSAGES", lang).toString();
+    QString paper = defaultlocale.value("LC_PAPER", lang).toString();
+    QString name = defaultlocale.value("LC_NAME", lang).toString();
+    QString address = defaultlocale.value("LC_ADDRESS", lang).toString();
+    QString telephone = defaultlocale.value("LC_TELEPHONE", lang).toString();
+    QString measurement = defaultlocale.value("LC_MEASUREMENT", lang).toString();
+    QString identification = defaultlocale.value("LC_IDENTIFICATION", lang).toString();
 
-        ui->pushButtonCType->setText(ctype);
-        ui->pushButtonNumeric->setText(numeric);
-        ui->pushButtonTime->setText(time);
-        ui->pushButtonCollate->setText(collate);
-        ui->pushButtonMonetary->setText(monetary);
-        ui->pushButtonMessages->setText(messages);
-        ui->pushButtonPaper->setText(paper);
-        ui->pushButtonName->setText(name);
-        ui->pushButtonAddress->setText(address);
-        ui->pushButtonTelephone->setText(telephone);
-        ui->pushButtonMeasurement->setText(measurement);
-        ui->pushButtonIdentification->setText(identification);
-    }
+    ui->pushButtonCType->setText(ctype);
+    ui->pushButtonNumeric->setText(numeric);
+    ui->pushButtonTime->setText(time);
+    ui->pushButtonCollate->setText(collate);
+    ui->pushButtonMonetary->setText(monetary);
+    ui->pushButtonMessages->setText(messages);
+    ui->pushButtonPaper->setText(paper);
+    ui->pushButtonName->setText(name);
+    ui->pushButtonAddress->setText(address);
+    ui->pushButtonTelephone->setText(telephone);
+    ui->pushButtonMeasurement->setText(measurement);
+    ui->pushButtonIdentification->setText(identification);
 }
 
 void MainWindow::setButtons()
