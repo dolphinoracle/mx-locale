@@ -23,7 +23,6 @@ chooseDialog::~chooseDialog()
 void chooseDialog::setup()
 {
     cmd = new Cmd(this);
-    cmdprog = new Cmd(this);
     this->setWindowTitle("MX Locale");
     buildLocaleList();
     ui->textSearch->setFocus();

@@ -27,7 +27,6 @@ private slots:
 private:
     Ui::chooseDialog *ui;
     Cmd *cmd;
-    Cmd *cmdprog;
     QHash<QString, QString> localeLib;
     QString value;
     QStringList localeList;
