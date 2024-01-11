@@ -219,7 +219,7 @@ void MainWindow::listItemChanged(QListWidgetItem *item)
         item->setText(commentedText);
         --countEnabled;
     }
-    ui->labelCountLocale->setText(tr("Count enabled: %1").arg(countEnabled));
+    ui->labelCountLocale->setText(tr("Locales enabled: %1").arg(countEnabled));
     connect(ui->listWidget, &QListWidget::itemChanged, this, &MainWindow::listItemChanged);
     if (ui->comboFilter->currentText() != tr("All")) {
         onFilterChanged(ui->comboFilter->currentText());
@@ -251,7 +251,7 @@ void MainWindow::displayLocalesGen()
             ++countEnabled;
         }
     }
-    ui->labelCountLocale->setText(tr("Count enabled: %1").arg(countEnabled));
+    ui->labelCountLocale->setText(tr("Locales enabled: %1").arg(countEnabled));
 }
 
 void MainWindow::localeGen()
