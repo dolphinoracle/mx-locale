@@ -22,7 +22,6 @@ chooseDialog::~chooseDialog()
 // Setup versious items first time program runs
 void chooseDialog::setup()
 {
-    cmd = new Cmd(this);
     this->setWindowTitle(tr("MX Locale"));
     buildLocaleList();
     ui->textSearch->setFocus();
@@ -33,7 +32,7 @@ void chooseDialog::buildLocaleList()
 {
     QFile libFile("/usr/lib/mx-locale/locale.lib");
 
-    QString locales = cmd->getOut("locale --all-locales");
+    QString locales = Cmd().getOut("locale --all-locales");
     QStringList availableLocales = locales.split(QRegExp("(\\r\\n)|(\\n\\r)|\\r|\\n"), Qt::SkipEmptyParts);
 
     if (!libFile.open(QIODevice::ReadOnly)) {
