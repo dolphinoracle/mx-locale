@@ -5,8 +5,6 @@
  *
  * Authors: Dolphin Oracle
  *          MX Linux <http://mxlinux.org>
- *          using live-usb-maker by BitJam
- *          and mx-live-usb-maker gui by adrian
  *
  * This is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,8 +60,8 @@ void MainWindow::setup()
     ui->tabWidget->setCurrentIndex(0);
     ui->buttonCancel->setEnabled(true);
     height = this->heightMM();
-    getcurrentlang();
-    setsubvariables();
+    getCurrentLang();
+    setSubvariables();
 }
 
 // Cleanup environment when window is closed
@@ -94,12 +92,12 @@ void MainWindow::on_buttonHelp_clicked()
 }
 
 // Get current language
-void MainWindow::getcurrentlang()
+void MainWindow::getCurrentLang()
 {
 
-    if (QFileInfo::exists(QStringLiteral("/etc/default/locale"))) {
-        QSettings defaultlocale(QStringLiteral("/etc/default/locale"), QSettings::NativeFormat);
-        QString lang = defaultlocale.value(QStringLiteral("LANG")).toString();
+    if (QFileInfo::exists("/etc/default/locale")) {
+        QSettings defaultlocale("/etc/default/locale", QSettings::NativeFormat);
+        QString lang = defaultlocale.value("LANG").toString();
         if (lang.isEmpty()) {
             lang = "C";
         }
@@ -108,59 +106,59 @@ void MainWindow::getcurrentlang()
     }
 }
 
-void MainWindow::setsubvariables()
+void MainWindow::setSubvariables()
 {
 
-    if (QFileInfo::exists(QStringLiteral("/etc/default/locale"))) {
-        QSettings defaultlocale(QStringLiteral("/etc/default/locale"), QSettings::NativeFormat);
+    if (QFileInfo::exists("/etc/default/locale")) {
+        QSettings defaultlocale("/etc/default/locale", QSettings::NativeFormat);
 
         QString lang = ui->buttonLocale->text();
 
-        QString ctype = defaultlocale.value(QStringLiteral("LC_CTYPE")).toString();
+        QString ctype = defaultlocale.value("LC_CTYPE").toString();
         if (ctype.isEmpty()) {
             ctype = lang;
         }
-        QString numeric = defaultlocale.value(QStringLiteral("LC_NUMERIC")).toString();
+        QString numeric = defaultlocale.value("LC_NUMERIC").toString();
         if (numeric.isEmpty()) {
             numeric = lang;
         }
-        QString time = defaultlocale.value(QStringLiteral("LC_TIME")).toString();
+        QString time = defaultlocale.value("LC_TIME").toString();
         if (time.isEmpty()) {
             time = lang;
         }
-        QString collate = defaultlocale.value(QStringLiteral("LC_COLLATE")).toString();
+        QString collate = defaultlocale.value("LC_COLLATE").toString();
         if (collate.isEmpty()) {
             collate = lang;
         }
-        QString monetary = defaultlocale.value(QStringLiteral("LC_MONETARY")).toString();
+        QString monetary = defaultlocale.value("LC_MONETARY").toString();
         if (monetary.isEmpty()) {
             monetary = lang;
         }
-        QString messages = defaultlocale.value(QStringLiteral("LC_MESSAGES")).toString();
+        QString messages = defaultlocale.value("LC_MESSAGES").toString();
         if (messages.isEmpty()) {
             messages = lang;
         }
-        QString paper = defaultlocale.value(QStringLiteral("LC_PAPER")).toString();
+        QString paper = defaultlocale.value("LC_PAPER").toString();
         if (paper.isEmpty()) {
             paper = lang;
         }
-        QString name = defaultlocale.value(QStringLiteral("LC_NAME")).toString();
+        QString name = defaultlocale.value("LC_NAME").toString();
         if (name.isEmpty()) {
             name = lang;
         }
-        QString address = defaultlocale.value(QStringLiteral("LC_ADDRESS")).toString();
+        QString address = defaultlocale.value("LC_ADDRESS").toString();
         if (address.isEmpty()) {
             address = lang;
         }
-        QString telephone = defaultlocale.value(QStringLiteral("LC_TELEPHONE")).toString();
+        QString telephone = defaultlocale.value("LC_TELEPHONE").toString();
         if (telephone.isEmpty()) {
             telephone = lang;
         }
-        QString measurement = defaultlocale.value(QStringLiteral("LC_MEASUREMENT")).toString();
+        QString measurement = defaultlocale.value("LC_MEASUREMENT").toString();
         if (measurement.isEmpty()) {
             measurement = lang;
         }
-        QString identification = defaultlocale.value(QStringLiteral("LC_IDENTIFICATION")).toString();
+        QString identification = defaultlocale.value("LC_IDENTIFICATION").toString();
         if (identification.isEmpty()) {
             identification = lang;
         }
@@ -185,8 +183,8 @@ void MainWindow::on_buttonLocale_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->buttonLocale->setText(dialog.selection());
-        setsubvariables();
+        ui->buttonLocale->setText(dialog.selection().section('\t', 0, 0));
+        setSubvariables();
     }
 }
 
@@ -195,7 +193,7 @@ void MainWindow::on_pushButtonCType_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonCType->setText(dialog.selection());
+        ui->pushButtonCType->setText(dialog.selection().section('\t', 0, 0));
     }
 }
 
@@ -204,7 +202,7 @@ void MainWindow::on_pushButtonNumeric_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonNumeric->setText(dialog.selection());
+        ui->pushButtonNumeric->setText(dialog.selection().section('\t', 0, 0));
     }
 }
 
@@ -213,7 +211,7 @@ void MainWindow::on_pushButtonTime_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonTime->setText(dialog.selection());
+        ui->pushButtonTime->setText(dialog.selection().section('\t', 0, 0));
     }
 }
 
@@ -222,7 +220,7 @@ void MainWindow::on_pushButtonCollate_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonCollate->setText(dialog.selection());
+        ui->pushButtonCollate->setText(dialog.selection().section('\t', 0, 0));
     }
 }
 
@@ -231,7 +229,7 @@ void MainWindow::on_pushButtonMonetary_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonMonetary->setText(dialog.selection());
+        ui->pushButtonMonetary->setText(dialog.selection().section('\t', 0, 0));
     }
 }
 
@@ -240,7 +238,7 @@ void MainWindow::on_pushButtonMessages_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonMessages->setText(dialog.selection());
+        ui->pushButtonMessages->setText(dialog.selection().section('\t', 0, 0));
     }
 }
 
@@ -249,7 +247,7 @@ void MainWindow::on_pushButtonPaper_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonPaper->setText(dialog.selection());
+        ui->pushButtonPaper->setText(dialog.selection().section('\t', 0, 0));
     }
 }
 
@@ -267,7 +265,7 @@ void MainWindow::on_pushButtonAddress_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonAddress->setText(dialog.selection());
+        ui->pushButtonAddress->setText(dialog.selection().section('\t', 0, 0));
     }
 }
 
@@ -276,7 +274,7 @@ void MainWindow::on_pushButtonTelephone_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonTelephone->setText(dialog.selection());
+        ui->pushButtonTelephone->setText(dialog.selection().section('\t', 0, 0));
     }
 }
 
@@ -285,7 +283,7 @@ void MainWindow::on_pushButtonMeasurement_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonMeasurement->setText(dialog.selection());
+        ui->pushButtonMeasurement->setText(dialog.selection().section('\t', 0, 0));
     }
 }
 
@@ -294,6 +292,6 @@ void MainWindow::on_pushButtonIdentification_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonIdentification->setText(dialog.selection());
+        ui->pushButtonIdentification->setText(dialog.selection().section('\t', 0, 0));
     }
 }

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QDialog>
+#include <QHash>
+
 #include <cmd.h>
 
 namespace Ui
@@ -20,13 +22,13 @@ public:
     QString selection();
 
 private slots:
-
-    void on_textSearch_textChanged(const QString &arg1);
+    void textSearch_textChanged();
 
 private:
     Ui::chooseDialog *ui;
     Cmd *cmd;
     Cmd *cmdprog;
+    QHash<QString, QString> localeLib;
     QString value;
-    QStringList availablelocales;
+    QStringList localeList;
 };

@@ -5,8 +5,6 @@
  *
  * Authors: Dolphin Oracle
  *          MX Linux <http://mxlinux.org>
- *          using live-usb-maker by BitJam
- *          and mx-live-usb-maker gui by adrian
  *
  * This is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +20,7 @@
  * along with this package. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QFile>
 #include <QMessageBox>
@@ -42,12 +39,11 @@ class MainWindow : public QDialog
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void setup();
-    void makeUsb(const QString &options);
-    void getcurrentlang();
-    void setsubvariables();
+    void getCurrentLang();
+    void setSubvariables();
 
 private slots:
     void cleanup();
@@ -75,5 +71,3 @@ private:
     QString label;
     int height;
 };
-
-#endif

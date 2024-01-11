@@ -3,8 +3,6 @@
 # *
 # * Authors: Dolphin Oracle
 # *          MX Linux <http://mxlinux.org>
-# *          using live-usb-maker by BitJam
-# *          and mx-live-usb-maker gui by adrian
 # *
 # * This is free software: you can redistribute it and/or modify
 # * it under the terms of the GNU General Public License as published by

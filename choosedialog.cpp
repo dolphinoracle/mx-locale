@@ -1,8 +1,10 @@
-#include "choosedialog.h"
-#include "QFile"
-#include "ui_choosedialog.h"
+#include <QFile>
 #include <QMessageBox>
-#include <cmd.h>
+#include <QTextStream>
+
+#include "choosedialog.h"
+#include "cmd.h"
+#include "ui_choosedialog.h"
 
 chooseDialog::chooseDialog(QWidget *parent)
     : QDialog(parent),
@@ -24,27 +26,41 @@ void chooseDialog::setup()
     cmdprog = new Cmd(this);
     this->setWindowTitle("MX Locale");
     buildLocaleList();
+    ui->textSearch->setFocus();
+    connect(ui->textSearch, &QLineEdit::textChanged, this, &chooseDialog::textSearch_textChanged);
 }
 
 void chooseDialog::buildLocaleList()
 {
     QFile libFile("/usr/lib/mx-locale/locale.lib");
-    QStringList libFileList;
-    QString localelist;
-    localelist = cmd->getOut("locale --all-locales");
-    availablelocales = localelist.split(QRegExp("(\\r\\n)|(\\n\\r)|\\r|\\n"), Qt::SkipEmptyParts);
+
+    QString locales = cmd->getOut("locale --all-locales");
+    QStringList availableLocales = locales.split(QRegExp("(\\r\\n)|(\\n\\r)|\\r|\\n"), Qt::SkipEmptyParts);
 
     if (!libFile.open(QIODevice::ReadOnly)) {
-        QMessageBox::information(0, "Error opening file", "Could not open locale.lib");
-    } else {
-        while (!libFile.atEnd()) {
-            libFileList.append(libFile.readLine());
-        }
-
-        libFile.close();
+        QMessageBox::critical(nullptr, "Error", "Could not open locale.lib");
+        return;
     }
-    libFileList.removeDuplicates();
-    ui->listWidgetAvailableLocales->addItems(availablelocales);
+
+    QTextStream in(&libFile);
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        QStringList list = line.split('-');
+        if (list.size() == 2) {
+            localeLib.insert(list.at(0).trimmed(), list.at(1).trimmed());
+        }
+    }
+    libFile.close();
+
+    for (const auto &locale : availableLocales) {
+        QString item = locale.section(".utf8", 0, 0);
+        QString line = locale;
+        if (localeLib.contains(item)) {
+            line.append("\t" + localeLib.value(item));
+        }
+        localeList << line;
+        ui->listWidgetAvailableLocales->addItem(line);
+    }
 }
 
 QString chooseDialog::selection()
@@ -52,11 +68,11 @@ QString chooseDialog::selection()
     return ui->listWidgetAvailableLocales->currentItem()->text();
 }
 
-void chooseDialog::on_textSearch_textChanged(const QString & /*arg1*/)
+void chooseDialog::textSearch_textChanged()
 {
     ui->listWidgetAvailableLocales->clear();
 
-    for (const QString &itemText : availablelocales) {
+    for (const QString &itemText : localeList) {
         if (itemText.contains(ui->textSearch->text(), Qt::CaseInsensitive)) {
             ui->listWidgetAvailableLocales->addItem(itemText);
         }
