@@ -42,9 +42,6 @@ class MainWindow : public QDialog
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void setup();
-    void getCurrentLang();
-    void setSubvariables();
 
 private slots:
     void cleanup();
@@ -57,5 +54,8 @@ private:
     Cmd *cmd;
     QButtonGroup *buttonGroup;
 
+    void getCurrentLang();
     void setButtons();
+    void setSubvariables();
+    void setup();
 };

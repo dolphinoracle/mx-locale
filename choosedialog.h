@@ -17,8 +17,7 @@ class chooseDialog : public QDialog
 public:
     explicit chooseDialog(QWidget *parent = nullptr);
     ~chooseDialog();
-    void setup();
-    void buildLocaleList();
+
     QString selection();
 
 private slots:
@@ -29,4 +28,6 @@ private:
     Cmd *cmd;
     QHash<QString, QString> localeLib;
     QStringList localeList;
+    void setup();
+    void buildLocaleList();
 };

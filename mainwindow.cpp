@@ -56,7 +56,6 @@ void MainWindow::setup()
     connect(QApplication::instance(), &QApplication::aboutToQuit, this, &MainWindow::cleanup);
     this->setWindowTitle("MX Locale");
     ui->tabWidget->setCurrentIndex(0);
-    ui->buttonCancel->setEnabled(true);
     getCurrentLang();
     setSubvariables();
     setButtons();
