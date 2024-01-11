@@ -62,6 +62,7 @@ void MainWindow::setup()
     height = this->heightMM();
     getCurrentLang();
     setSubvariables();
+    setButtons();
 }
 
 // Cleanup environment when window is closed
@@ -69,6 +70,16 @@ void MainWindow::cleanup()
 {
     QString log_name = "/tmp/mx-locale.log";
     system("[ -f " + log_name.toUtf8() + " ] && rm " + log_name.toUtf8());
+}
+
+void MainWindow::onGroupButton(int button_id)
+{
+    qDebug() << "clicked " << button_id;
+    chooseDialog dialog;
+    dialog.setModal(true);
+    if (dialog.exec() == QDialog::Accepted) {
+        buttonGroup->button(button_id)->setText(dialog.selection().section('\t', 0, 0).trimmed());
+    }
 }
 
 void MainWindow::on_buttonAbout_clicked()
@@ -174,120 +185,21 @@ void MainWindow::setSubvariables()
     }
 }
 
-void MainWindow::on_buttonLocale_clicked()
+void MainWindow::setButtons()
 {
-    chooseDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->buttonLocale->setText(dialog.selection().section('\t', 0, 0).trimmed());
-        setSubvariables();
-    }
-}
-
-void MainWindow::on_pushButtonCType_clicked()
-{
-    chooseDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonCType->setText(dialog.selection().section('\t', 0, 0).trimmed());
-    }
-}
-
-void MainWindow::on_pushButtonNumeric_clicked()
-{
-    chooseDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonNumeric->setText(dialog.selection().section('\t', 0, 0).trimmed());
-    }
-}
-
-void MainWindow::on_pushButtonTime_clicked()
-{
-    chooseDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonTime->setText(dialog.selection().section('\t', 0, 0).trimmed());
-    }
-}
-
-void MainWindow::on_pushButtonCollate_clicked()
-{
-    chooseDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonCollate->setText(dialog.selection().section('\t', 0, 0).trimmed());
-    }
-}
-
-void MainWindow::on_pushButtonMonetary_clicked()
-{
-    chooseDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonMonetary->setText(dialog.selection().section('\t', 0, 0).trimmed());
-    }
-}
-
-void MainWindow::on_pushButtonMessages_clicked()
-{
-    chooseDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonMessages->setText(dialog.selection().section('\t', 0, 0).trimmed());
-    }
-}
-
-void MainWindow::on_pushButtonPaper_clicked()
-{
-    chooseDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonPaper->setText(dialog.selection().section('\t', 0, 0).trimmed());
-    }
-}
-
-void MainWindow::on_pushButtonName_clicked()
-{
-    chooseDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonName->setText(dialog.selection());
-    }
-}
-
-void MainWindow::on_pushButtonAddress_clicked()
-{
-    chooseDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonAddress->setText(dialog.selection().section('\t', 0, 0).trimmed());
-    }
-}
-
-void MainWindow::on_pushButtonTelephone_clicked()
-{
-    chooseDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonTelephone->setText(dialog.selection().section('\t', 0, 0).trimmed());
-    }
-}
-
-void MainWindow::on_pushButtonMeasurement_clicked()
-{
-    chooseDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonMeasurement->setText(dialog.selection().section('\t', 0, 0).trimmed());
-    }
-}
-
-void MainWindow::on_pushButtonIdentification_clicked()
-{
-    chooseDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonIdentification->setText(dialog.selection().section('\t', 0, 0).trimmed());
-    }
+    buttonGroup = new QButtonGroup(this);
+    buttonGroup->addButton(ui->pushButtonAddress, 1);
+    buttonGroup->addButton(ui->pushButtonCollate, 2);
+    buttonGroup->addButton(ui->pushButtonCType, 3);
+    buttonGroup->addButton(ui->pushButtonIdentification, 4);
+    buttonGroup->addButton(ui->pushButtonMeasurement, 5);
+    buttonGroup->addButton(ui->pushButtonMessages, 6);
+    buttonGroup->addButton(ui->pushButtonMonetary, 7);
+    buttonGroup->addButton(ui->pushButtonName, 8);
+    buttonGroup->addButton(ui->pushButtonNumeric, 9);
+    buttonGroup->addButton(ui->pushButtonPaper, 10);
+    buttonGroup->addButton(ui->pushButtonTelephone, 11);
+    buttonGroup->addButton(ui->pushButtonTime, 12);
+    buttonGroup->addButton(ui->buttonLocale, 13);
+    connect(buttonGroup, &QButtonGroup::idClicked, this, &MainWindow::onGroupButton);
 }

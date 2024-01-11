@@ -205,7 +205,7 @@
      <property name="currentIndex">
       <number>1</number>
      </property>
-     <widget class="QWidget" name="tabWidgetPage1" native="true">
+     <widget class="QWidget" name="tabWidgetPage1">
       <attribute name="title">
        <string extracomment=" language selection, also default for locale subvariables if not otherwise defined">Language</string>
       </attribute>
@@ -239,7 +239,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabWidgetPage2" native="true">
+     <widget class="QWidget" name="tabWidgetPage2">
       <attribute name="title">
        <string extracomment="defines individual subvariables for locale">Locale subvariables</string>
       </attribute>
