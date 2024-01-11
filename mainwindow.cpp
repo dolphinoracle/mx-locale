@@ -147,19 +147,19 @@ void MainWindow::setSubvariables()
 void MainWindow::setButtons()
 {
     buttonGroup = new QButtonGroup(this);
-    buttonGroup->addButton(ui->pushButtonAddress, 1);
-    buttonGroup->addButton(ui->pushButtonCollate, 2);
-    buttonGroup->addButton(ui->pushButtonCType, 3);
-    buttonGroup->addButton(ui->pushButtonIdentification, 4);
-    buttonGroup->addButton(ui->pushButtonMeasurement, 5);
-    buttonGroup->addButton(ui->pushButtonMessages, 6);
-    buttonGroup->addButton(ui->pushButtonMonetary, 7);
-    buttonGroup->addButton(ui->pushButtonName, 8);
-    buttonGroup->addButton(ui->pushButtonNumeric, 9);
-    buttonGroup->addButton(ui->pushButtonPaper, 10);
-    buttonGroup->addButton(ui->pushButtonTelephone, 11);
-    buttonGroup->addButton(ui->pushButtonTime, 12);
-    buttonGroup->addButton(ui->buttonLocale, 13);
+    buttonGroup->addButton(ui->pushButtonAddress, ButtonID::Address);
+    buttonGroup->addButton(ui->pushButtonCollate, ButtonID::Collate);
+    buttonGroup->addButton(ui->pushButtonCType, ButtonID::CType);
+    buttonGroup->addButton(ui->pushButtonIdentification, ButtonID::Identification);
+    buttonGroup->addButton(ui->pushButtonMeasurement, ButtonID::Measurement);
+    buttonGroup->addButton(ui->pushButtonMessages, ButtonID::Messages);
+    buttonGroup->addButton(ui->pushButtonMonetary, ButtonID::Monetary);
+    buttonGroup->addButton(ui->pushButtonName, ButtonID::Name);
+    buttonGroup->addButton(ui->pushButtonNumeric, ButtonID::Numeric);
+    buttonGroup->addButton(ui->pushButtonPaper, ButtonID::Paper);
+    buttonGroup->addButton(ui->pushButtonTelephone, ButtonID::Telephone);
+    buttonGroup->addButton(ui->pushButtonTime, ButtonID::Time);
+    buttonGroup->addButton(ui->buttonLocale, ButtonID::Locale);
     connect(buttonGroup, &QButtonGroup::idClicked, this, &MainWindow::onGroupButton);
     connect(ui->buttonAbout, &QPushButton::clicked, this, &MainWindow::aboutClicked);
     connect(ui->buttonHelp, &QPushButton::clicked, this, &MainWindow::helpClicked);

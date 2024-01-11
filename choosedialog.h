@@ -28,6 +28,7 @@ private:
     Cmd *cmd;
     QHash<QString, QString> localeLib;
     QStringList localeList;
+
     void setup();
     void buildLocaleList();
 };

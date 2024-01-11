@@ -35,6 +35,25 @@ namespace Ui
 class MainWindow;
 }
 
+namespace ButtonID
+{
+enum {
+    Address = 1,
+    Collate,
+    CType,
+    Identification,
+    Measurement,
+    Messages,
+    Monetary,
+    Name,
+    Numeric,
+    Paper,
+    Telephone,
+    Time,
+    Locale
+};
+}
+
 class MainWindow : public QDialog
 {
     Q_OBJECT
