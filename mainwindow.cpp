@@ -53,19 +53,11 @@ MainWindow::~MainWindow()
 void MainWindow::setup()
 {
     cmd = new Cmd(this);
-    connect(QApplication::instance(), &QApplication::aboutToQuit, this, &MainWindow::cleanup);
     this->setWindowTitle("MX Locale");
     ui->tabWidget->setCurrentIndex(0);
     getCurrentLang();
     setSubvariables();
     setButtons();
-}
-
-// Cleanup environment when window is closed
-void MainWindow::cleanup()
-{
-    QString log_name = "/tmp/mx-locale.log";
-    system("[ -f " + log_name.toUtf8() + " ] && rm " + log_name.toUtf8());
 }
 
 void MainWindow::onGroupButton(int button_id)

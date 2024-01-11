@@ -63,7 +63,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void cleanup();
     void onGroupButton(int button_id);
     void aboutClicked();
     void helpClicked();

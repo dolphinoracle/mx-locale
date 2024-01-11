@@ -25,15 +25,11 @@
 #include <QDebug>
 #include <QIcon>
 #include <QLocale>
-#include <QScopedPointer>
 #include <QTranslator>
 
 #include "mainwindow.h"
 #include <unistd.h>
 #include <version.h>
-
-QScopedPointer<QFile> logFile;
-void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
 int main(int argc, char *argv[])
 {
@@ -50,14 +46,6 @@ int main(int argc, char *argv[])
     qtTran.load(QString("qt_") + QLocale::system().name());
     a.installTranslator(&qtTran);
 
-    QString log_name = "/tmp/mx-locale.log";
-    // Set the logging files
-    logFile.reset(new QFile(log_name));
-    // Open the file logging
-    logFile.data()->open(QFile::Append | QFile::Text);
-    // Set handler
-    qInstallMessageHandler(messageHandler);
-
     QTranslator appTran;
     appTran.load(QString("mx-locale_") + QLocale::system().name(), "/usr/share/mx-locale/locale");
     a.installTranslator(&appTran);
@@ -67,40 +55,4 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
     return a.exec();
-}
-
-// The implementation of the handler
-void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
-{
-    // Write to terminal
-    QTextStream term_out(stdout);
-    term_out << msg << "\n";
-
-    // Open stream file writes
-    QTextStream out(logFile.data());
-
-    // Write the date of recording
-    out << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz ");
-    // By type determine to what level belongs message
-    switch (type) {
-    // case QtInfoMsg:     out << "INF "; break; Not in older Qt versions
-    case QtDebugMsg:
-        out << "DBG ";
-        break;
-    case QtWarningMsg:
-        out << "WRN ";
-        break;
-    case QtCriticalMsg:
-        out << "CRT ";
-        break;
-    case QtFatalMsg:
-        out << "FTL ";
-        break;
-    default:
-        out << "OTH";
-        break;
-    }
-    // Write to the output category of the message and the message itself
-    out << context.category << ": " << msg << "\n";
-    out.flush(); // Clear the buffered data
 }
