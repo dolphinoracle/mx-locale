@@ -160,7 +160,7 @@ void MainWindow::setConnections()
 void MainWindow::tabWidgetCurrentChanged(int /*index*/)
 {
     if (ui->tabWidget->currentWidget() == ui->tabManagement) {
-        ui->labelCurrentLocale->setText(tr("Locale in use: %1").arg(getCurrentLang()));
+        ui->labelCurrentLocale->setText(tr("Locale in use: <b>%1</b>").arg(getCurrentLang()));
         displayLocalesGen();
     }
 }
