@@ -38,7 +38,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QDialog(parent),
       ui(new Ui::MainWindow)
 {
-    qDebug().noquote() << QCoreApplication::applicationName() << "version:" << VERSION;
     ui->setupUi(this);
     setWindowFlags(Qt::Window); // For the close, min and max buttons
     setup();
@@ -74,7 +73,6 @@ void MainWindow::cleanup()
 
 void MainWindow::onGroupButton(int button_id)
 {
-    qDebug() << "clicked " << button_id;
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
