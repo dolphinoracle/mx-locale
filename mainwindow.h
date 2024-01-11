@@ -69,6 +69,7 @@ private slots:
     void listItemChanged(QListWidgetItem *item);
     void onGroupButton(int button_id);
     void tabWidgetCurrentChanged();
+    void onFilterChanged(const QString &text);
 
 private:
     Ui::MainWindow *ui;
