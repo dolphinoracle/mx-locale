@@ -51,7 +51,7 @@ enum {
     Paper,
     Telephone,
     Time,
-    Locale
+    Lang
 };
 }
 
@@ -65,7 +65,6 @@ public:
 
 private slots:
     void aboutClicked();
-    void applyClicked();
     void helpClicked();
     void listItemChanged(QListWidgetItem *item);
     void onFilterChanged(const QString &text);

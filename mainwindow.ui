@@ -19,7 +19,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="5" column="0" colspan="3">
-    <layout class="QGridLayout" name="buttonBar" columnstretch="0,0,0,0,0,0,0,0,0,0">
+    <layout class="QGridLayout" name="buttonBar" columnstretch="0,0,0,0,0,0,0,0,0">
      <property name="sizeConstraint">
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
@@ -38,39 +38,7 @@
      <property name="spacing">
       <number>5</number>
      </property>
-     <item row="1" column="2">
-      <spacer name="horizontalSpacer1">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Minimum</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>100</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="1" column="4" colspan="2">
-      <spacer name="horizontalSpacer2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Minimum</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>100</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="1" column="9">
+     <item row="1" column="8">
       <widget class="QPushButton" name="buttonCancel">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -118,32 +86,6 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="buttonHelp">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip">
-        <string>Display help </string>
-       </property>
-       <property name="text">
-        <string>Help</string>
-       </property>
-       <property name="icon">
-        <iconset theme="help-contents">
-         <normaloff>.</normaloff>.</iconset>
-       </property>
-       <property name="shortcut">
-        <string>Alt+H</string>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0">
       <widget class="QPushButton" name="buttonAbout">
        <property name="sizePolicy">
@@ -170,27 +112,63 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="7">
-      <widget class="QPushButton" name="buttonApply">
+     <item row="1" column="1">
+      <widget class="QPushButton" name="buttonHelp">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="toolTip">
+        <string>Display help </string>
+       </property>
        <property name="text">
-        <string>Apply</string>
+        <string>Help</string>
+       </property>
+       <property name="icon">
+        <iconset theme="help-contents">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="shortcut">
-        <string/>
+        <string>Alt+H</string>
        </property>
        <property name="autoDefault">
-        <bool>true</bool>
-       </property>
-       <property name="default">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
+     </item>
+     <item row="1" column="2">
+      <spacer name="horizontalSpacer1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Minimum</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>100</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="4" colspan="2">
+      <spacer name="horizontalSpacer2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Minimum</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>100</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
@@ -203,7 +181,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabLanguage">
       <attribute name="title">
@@ -224,7 +202,7 @@
         </spacer>
        </item>
        <item row="1" column="1">
-        <widget class="QPushButton" name="buttonLocale">
+        <widget class="QPushButton" name="buttonLang">
          <property name="text">
           <string>PushButton</string>
          </property>
@@ -477,10 +455,9 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>buttonLocale</tabstop>
+  <tabstop>buttonLang</tabstop>
   <tabstop>buttonAbout</tabstop>
   <tabstop>buttonHelp</tabstop>
-  <tabstop>buttonApply</tabstop>
   <tabstop>buttonCancel</tabstop>
   <tabstop>pushButtonCType</tabstop>
   <tabstop>pushButtonNumeric</tabstop>

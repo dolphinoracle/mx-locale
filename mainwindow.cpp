@@ -59,7 +59,7 @@ void MainWindow::setup()
     cmd = new Cmd(this);
     this->setWindowTitle(tr("MX Locale"));
     ui->tabWidget->setCurrentIndex(0);
-    ui->buttonLocale->setText(getCurrentLang());
+    ui->buttonLang->setText(getCurrentLang());
     setSubvariables();
     setButtons();
     setConnections();
@@ -69,9 +69,26 @@ void MainWindow::onGroupButton(int button_id)
 {
     chooseDialog dialog;
     dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
-        buttonGroup->button(button_id)->setText(dialog.selection().section('\t', 0, 0).trimmed());
+    if (dialog.exec() != QDialog::Accepted) {
+        return;
     }
+    buttonGroup->button(button_id)->setText(dialog.selection().section('\t', 0, 0).trimmed());
+    QHash<int, QString> hashVarName {
+        {ButtonID::Lang, "LANG"},
+        {ButtonID::Address, "LC_ADDRESS"},
+        {ButtonID::Collate, "LC_COLATE"},
+        {ButtonID::CType, "LC_CTYPE"},
+        {ButtonID::Identification, "LC_IDENTIFICATION"},
+        {ButtonID::Measurement, "LC_MEASUREMENT"},
+        {ButtonID::Messages, "LC_MESSAGES"},
+        {ButtonID::Monetary, "LC_MONETARY"},
+        {ButtonID::Name, "LC_NAME"},
+        {ButtonID::Numeric, "LC_NUMERIC"},
+        {ButtonID::Paper, "LC_PAPER"},
+        {ButtonID::Telephone, "LC_TELEPHONE"},
+        {ButtonID::Time, "LC_TIME"},
+    };
+    Cmd().runAsRoot("update-locale " + hashVarName.value(button_id) + '=' + buttonGroup->button(button_id)->text());
 }
 
 void MainWindow::aboutClicked()
@@ -86,15 +103,6 @@ void MainWindow::aboutClicked()
                            + tr("Copyright (c) MX Linux") + "<br /><br /></p>",
                        "/usr/share/doc/mx-locale/license.html", tr("%1 License").arg(this->windowTitle()), true);
     this->show();
-}
-
-void MainWindow::applyClicked()
-{
-    if (ui->tabWidget->currentWidget() == ui->tabManagement) {
-        if (localeGenChanged) {
-            localeGen();
-        }
-    }
 }
 
 void MainWindow::helpClicked()
@@ -122,7 +130,7 @@ void MainWindow::setSubvariables()
 
     QSettings defaultlocale("/etc/default/locale", QSettings::NativeFormat);
 
-    QString lang = ui->buttonLocale->text();
+    QString lang = ui->buttonLang->text();
 
     QString ctype = defaultlocale.value("LC_CTYPE", lang).toString();
     QString numeric = defaultlocale.value("LC_NUMERIC", lang).toString();
@@ -166,14 +174,13 @@ void MainWindow::setButtons()
     buttonGroup->addButton(ui->pushButtonPaper, ButtonID::Paper);
     buttonGroup->addButton(ui->pushButtonTelephone, ButtonID::Telephone);
     buttonGroup->addButton(ui->pushButtonTime, ButtonID::Time);
-    buttonGroup->addButton(ui->buttonLocale, ButtonID::Locale);
+    buttonGroup->addButton(ui->buttonLang, ButtonID::Lang);
 }
 
 void MainWindow::setConnections()
 {
     connect(buttonGroup, &QButtonGroup::idClicked, this, &MainWindow::onGroupButton);
     connect(ui->buttonAbout, &QPushButton::clicked, this, &MainWindow::aboutClicked);
-    connect(ui->buttonApply, &QPushButton::clicked, this, &MainWindow::applyClicked);
     connect(ui->buttonHelp, &QPushButton::clicked, this, &MainWindow::helpClicked);
     connect(ui->comboFilter, &QComboBox::currentTextChanged, this, &MainWindow::onFilterChanged);
     connect(ui->listWidget, &QListWidget::itemChanged, this, &MainWindow::listItemChanged);
