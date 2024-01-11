@@ -97,6 +97,12 @@ QString MainWindow::getCurrentLang() const
     return defaultlocale.value("LANG", "C").toString();
 }
 
+void MainWindow::disableAllButCurrent()
+{
+    Cmd().runAsRoot("sed -i \"/^$LANG\\|^#/! s/#*/# /\" /etc/locale.gen");
+    displayLocalesGen();
+}
+
 void MainWindow::setSubvariables()
 {
 
@@ -156,6 +162,7 @@ void MainWindow::setConnections()
     connect(ui->buttonHelp, &QPushButton::clicked, this, &MainWindow::helpClicked);
     connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::tabWidgetCurrentChanged);
     connect(ui->listWidget, &QListWidget::itemChanged, this, &MainWindow::listItemChanged);
+    connect(ui->pushDisableLocales, &QPushButton::clicked, this, &MainWindow::disableAllButCurrent);
 }
 
 void MainWindow::tabWidgetCurrentChanged()
@@ -183,7 +190,7 @@ void MainWindow::listItemChanged(QListWidgetItem *item)
 
 void MainWindow::displayLocalesGen()
 {
-
+    ui->listWidget->clear();
     QFile file("/etc/locale.gen");
     if (!file.open(QIODevice::ReadOnly)) {
         QMessageBox::critical(nullptr, tr("Error"), tr("Could not open %1").arg("/etc/locale.gen"));

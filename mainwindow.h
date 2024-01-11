@@ -76,6 +76,7 @@ private:
     QButtonGroup *buttonGroup;
 
     [[nodiscard]] QString getCurrentLang() const;
+    void disableAllButCurrent();
     void displayLocalesGen();
     void setButtons();
     void setConnections();
