@@ -24,6 +24,7 @@
 
 #include <QButtonGroup>
 #include <QFile>
+#include <QListWidget>
 #include <QMessageBox>
 #include <QProcess>
 #include <QSettings>
@@ -63,10 +64,11 @@ public:
     ~MainWindow();
 
 private slots:
-    void onGroupButton(int button_id);
     void aboutClicked();
     void helpClicked();
-    void tabWidgetCurrentChanged(int index);
+    void listItemChanged(QListWidgetItem *item);
+    void onGroupButton(int button_id);
+    void tabWidgetCurrentChanged();
 
 private:
     Ui::MainWindow *ui;

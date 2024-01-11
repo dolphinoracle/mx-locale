@@ -155,14 +155,26 @@ void MainWindow::setConnections()
     connect(ui->buttonAbout, &QPushButton::clicked, this, &MainWindow::aboutClicked);
     connect(ui->buttonHelp, &QPushButton::clicked, this, &MainWindow::helpClicked);
     connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::tabWidgetCurrentChanged);
+    connect(ui->listWidget, &QListWidget::itemChanged, this, &MainWindow::listItemChanged);
 }
 
-void MainWindow::tabWidgetCurrentChanged(int /*index*/)
+void MainWindow::tabWidgetCurrentChanged()
 {
     if (ui->tabWidget->currentWidget() == ui->tabManagement) {
         ui->labelCurrentLocale->setText(tr("Locale in use: <b>%1</b>").arg(getCurrentLang()));
         displayLocalesGen();
     }
+}
+
+void MainWindow::listItemChanged(QListWidgetItem *item)
+{
+    ui->listWidget->disconnect();
+    if (item->checkState() == Qt::Checked) {
+        item->setText(item->text().remove(QRegularExpression("^# ")));
+    } else {
+        item->setText("# " + item->text());
+    }
+    connect(ui->listWidget, &QListWidget::itemChanged, this, &MainWindow::listItemChanged);
 }
 
 void MainWindow::displayLocalesGen()
