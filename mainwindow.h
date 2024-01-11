@@ -66,14 +66,17 @@ private slots:
     void onGroupButton(int button_id);
     void aboutClicked();
     void helpClicked();
+    void tabWidgetCurrentChanged(int index);
 
 private:
     Ui::MainWindow *ui;
     Cmd *cmd;
     QButtonGroup *buttonGroup;
 
-    void getCurrentLang();
+    [[nodiscard]] QString getCurrentLang() const;
+    void displayLocalesGen();
     void setButtons();
+    void setConnections();
     void setSubvariables();
     void setup();
 };

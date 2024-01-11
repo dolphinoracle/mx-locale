@@ -55,9 +55,10 @@ void MainWindow::setup()
     cmd = new Cmd(this);
     this->setWindowTitle("MX Locale");
     ui->tabWidget->setCurrentIndex(0);
-    getCurrentLang();
+    ui->buttonLocale->setText(getCurrentLang());
     setSubvariables();
     setButtons();
+    setConnections();
 }
 
 void MainWindow::onGroupButton(int button_id)
@@ -90,11 +91,10 @@ void MainWindow::helpClicked()
 }
 
 // Get current language
-void MainWindow::getCurrentLang()
+QString MainWindow::getCurrentLang() const
 {
     QSettings defaultlocale("/etc/default/locale", QSettings::NativeFormat);
-    QString lang = defaultlocale.value("LANG", "C").toString();
-    ui->buttonLocale->setText(lang);
+    return defaultlocale.value("LANG", "C").toString();
 }
 
 void MainWindow::setSubvariables()
@@ -147,7 +147,45 @@ void MainWindow::setButtons()
     buttonGroup->addButton(ui->pushButtonTelephone, ButtonID::Telephone);
     buttonGroup->addButton(ui->pushButtonTime, ButtonID::Time);
     buttonGroup->addButton(ui->buttonLocale, ButtonID::Locale);
+}
+
+void MainWindow::setConnections()
+{
     connect(buttonGroup, &QButtonGroup::idClicked, this, &MainWindow::onGroupButton);
     connect(ui->buttonAbout, &QPushButton::clicked, this, &MainWindow::aboutClicked);
     connect(ui->buttonHelp, &QPushButton::clicked, this, &MainWindow::helpClicked);
+    connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::tabWidgetCurrentChanged);
+}
+
+void MainWindow::tabWidgetCurrentChanged(int /*index*/)
+{
+    if (ui->tabWidget->currentWidget() == ui->tabManagement) {
+        ui->labelCurrentLocale->setText(tr("Locale in use: %1").arg(getCurrentLang()));
+        displayLocalesGen();
+    }
+}
+
+void MainWindow::displayLocalesGen()
+{
+
+    QFile file("/etc/locale.gen");
+    if (!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::critical(nullptr, "Error", "Could not open /etc/locale.gen");
+        return;
+    }
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.contains(QRegularExpression("^# .._"))) {
+            auto item = new QListWidgetItem;
+            item->setCheckState(Qt::Unchecked);
+            item->setText(line);
+            ui->listWidget->addItem(item);
+        } else if (line.contains(QRegularExpression("^.._"))) {
+            auto item = new QListWidgetItem;
+            item->setCheckState(Qt::Checked);
+            item->setText(line);
+            ui->listWidget->addItem(item);
+        }
+    }
 }
