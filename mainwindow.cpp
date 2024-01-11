@@ -53,7 +53,7 @@ MainWindow::~MainWindow()
 void MainWindow::setup()
 {
     cmd = new Cmd(this);
-    this->setWindowTitle("MX Locale");
+    this->setWindowTitle(tr("MX Locale"));
     ui->tabWidget->setCurrentIndex(0);
     ui->buttonLocale->setText(getCurrentLang());
     setSubvariables();
@@ -170,7 +170,7 @@ void MainWindow::displayLocalesGen()
 
     QFile file("/etc/locale.gen");
     if (!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::critical(nullptr, "Error", "Could not open /etc/locale.gen");
+        QMessageBox::critical(nullptr, tr("Error"), tr("Could not open %1").arg("/etc/locale.gen"));
         return;
     }
     QTextStream in(&file);

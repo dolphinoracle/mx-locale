@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
         return EXIT_SUCCESS;
     }
 
-    a.setWindowIcon(QIcon::fromTheme("media-removable"));
+    a.setWindowIcon(QIcon::fromTheme("mx-locale"));
 
     QTranslator qtTran;
     qtTran.load(QString("qt_") + QLocale::system().name());
