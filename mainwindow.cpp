@@ -170,9 +170,13 @@ void MainWindow::listItemChanged(QListWidgetItem *item)
 {
     ui->listWidget->disconnect();
     if (item->checkState() == Qt::Checked) {
-        item->setText(item->text().remove(QRegularExpression("^# ")));
+        QString uncommentedText = item->text().remove(QRegularExpression("^# "));
+        Cmd().runAsRoot("sed -i 's/" + item->text() + "/" + uncommentedText + "/' /etc/locale.gen");
+        item->setText(uncommentedText);
     } else {
-        item->setText("# " + item->text());
+        QString commentedText = "# " + item->text();
+        Cmd().runAsRoot("sed -i 's/" + item->text() + "/" + commentedText + "/' /etc/locale.gen");
+        item->setText(commentedText);
     }
     connect(ui->listWidget, &QListWidget::itemChanged, this, &MainWindow::listItemChanged);
 }
