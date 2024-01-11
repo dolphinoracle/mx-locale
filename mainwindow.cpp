@@ -27,6 +27,7 @@
 
 #include <QDebug>
 #include <QFileDialog>
+#include <QProgressDialog>
 #include <QScrollBar>
 #include <QTextStream>
 
@@ -46,6 +47,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    if (localegenChanged) {
+        localeGen();
+    }
     delete ui;
 }
 
@@ -84,6 +88,15 @@ void MainWindow::aboutClicked()
     this->show();
 }
 
+void MainWindow::applyClicked()
+{
+    if (ui->tabWidget->currentWidget() == ui->tabManagement) {
+        if (localegenChanged) {
+            localeGen();
+        }
+    }
+}
+
 void MainWindow::helpClicked()
 {
     QString url = "file:///usr/share/doc/mx-locale/help/mx-locale.html";
@@ -100,6 +113,7 @@ QString MainWindow::getCurrentLang() const
 void MainWindow::disableAllButCurrent()
 {
     Cmd().runAsRoot("sed -i \"/^$LANG\\|^#/! s/#*/# /\" /etc/locale.gen");
+    localegenChanged = true;
     onFilterChanged(ui->comboFilter->currentText());
 }
 
@@ -159,11 +173,12 @@ void MainWindow::setConnections()
 {
     connect(buttonGroup, &QButtonGroup::idClicked, this, &MainWindow::onGroupButton);
     connect(ui->buttonAbout, &QPushButton::clicked, this, &MainWindow::aboutClicked);
+    connect(ui->buttonApply, &QPushButton::clicked, this, &MainWindow::applyClicked);
     connect(ui->buttonHelp, &QPushButton::clicked, this, &MainWindow::helpClicked);
-    connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::tabWidgetCurrentChanged);
+    connect(ui->comboFilter, &QComboBox::currentTextChanged, this, &MainWindow::onFilterChanged);
     connect(ui->listWidget, &QListWidget::itemChanged, this, &MainWindow::listItemChanged);
     connect(ui->pushDisableLocales, &QPushButton::clicked, this, &MainWindow::disableAllButCurrent);
-    connect(ui->comboFilter, &QComboBox::currentTextChanged, this, &MainWindow::onFilterChanged);
+    connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::tabWidgetCurrentChanged);
 }
 
 void MainWindow::tabWidgetCurrentChanged()
@@ -192,15 +207,19 @@ void MainWindow::onFilterChanged(const QString &text)
 void MainWindow::listItemChanged(QListWidgetItem *item)
 {
     ui->listWidget->disconnect();
+    localegenChanged = true;
     if (item->checkState() == Qt::Checked) {
         QString uncommentedText = item->text().remove(QRegularExpression("^# "));
         Cmd().runAsRoot("sed -i 's/" + item->text() + "/" + uncommentedText + "/' /etc/locale.gen");
         item->setText(uncommentedText);
+        ++countEnabled;
     } else {
         QString commentedText = "# " + item->text();
         Cmd().runAsRoot("sed -i 's/" + item->text() + "/" + commentedText + "/' /etc/locale.gen");
         item->setText(commentedText);
+        --countEnabled;
     }
+    ui->labelCountLocale->setText(tr("Count enabled: %1").arg(countEnabled));
     connect(ui->listWidget, &QListWidget::itemChanged, this, &MainWindow::listItemChanged);
     if (ui->comboFilter->currentText() != tr("All")) {
         onFilterChanged(ui->comboFilter->currentText());
@@ -209,6 +228,7 @@ void MainWindow::listItemChanged(QListWidgetItem *item)
 
 void MainWindow::displayLocalesGen()
 {
+    countEnabled = 0;
     ui->listWidget->clear();
     QFile file("/etc/locale.gen");
     if (!file.open(QIODevice::ReadOnly)) {
@@ -228,6 +248,17 @@ void MainWindow::displayLocalesGen()
             item->setCheckState(Qt::Checked);
             item->setText(line);
             ui->listWidget->addItem(item);
+            ++countEnabled;
         }
     }
+    ui->labelCountLocale->setText(tr("Count enabled: %1").arg(countEnabled));
+}
+
+void MainWindow::localeGen()
+{
+    QProgressDialog prog("Updating locales, please wait", nullptr, 0, countEnabled + 1);
+    connect(cmd, &Cmd::outputAvailable, this, [&prog] { prog.setValue(prog.value() + 1); });
+    prog.show();
+    cmd->runAsRoot("locale-gen");
+    localegenChanged = false;
 }

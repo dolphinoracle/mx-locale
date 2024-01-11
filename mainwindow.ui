@@ -426,46 +426,10 @@
        <string>Locale Management</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="2" column="0">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="0" colspan="3">
-        <widget class="QListWidget" name="listWidget"/>
-       </item>
        <item row="2" column="1">
         <widget class="QPushButton" name="pushDisableLocales">
          <property name="text">
           <string>Disable all locales except the one in use</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="labelCurrentLocale">
-         <property name="text">
-          <string/>
          </property>
         </widget>
        </item>
@@ -488,6 +452,23 @@
          </item>
         </widget>
        </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelCurrentLocale">
+         <property name="text">
+          <string notr="true">Current locale</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
+        <widget class="QListWidget" name="listWidget"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="labelCountLocale">
+         <property name="text">
+          <string notr="true">labelCountLocale</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -495,10 +476,26 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>buttonLocale</tabstop>
   <tabstop>buttonAbout</tabstop>
   <tabstop>buttonHelp</tabstop>
   <tabstop>buttonApply</tabstop>
   <tabstop>buttonCancel</tabstop>
+  <tabstop>pushButtonCType</tabstop>
+  <tabstop>pushButtonNumeric</tabstop>
+  <tabstop>pushButtonTime</tabstop>
+  <tabstop>pushButtonCollate</tabstop>
+  <tabstop>pushButtonMonetary</tabstop>
+  <tabstop>pushButtonMessages</tabstop>
+  <tabstop>pushButtonPaper</tabstop>
+  <tabstop>pushButtonName</tabstop>
+  <tabstop>pushButtonAddress</tabstop>
+  <tabstop>pushButtonTelephone</tabstop>
+  <tabstop>pushButtonMeasurement</tabstop>
+  <tabstop>pushButtonIdentification</tabstop>
+  <tabstop>comboFilter</tabstop>
+  <tabstop>listWidget</tabstop>
  </tabstops>
  <resources>
   <include location="images.qrc"/>
@@ -511,8 +508,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>723</x>
-     <y>519</y>
+     <x>591</x>
+     <y>625</y>
     </hint>
     <hint type="destinationlabel">
      <x>388</x>

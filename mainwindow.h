@@ -65,20 +65,24 @@ public:
 
 private slots:
     void aboutClicked();
+    void applyClicked();
     void helpClicked();
     void listItemChanged(QListWidgetItem *item);
+    void onFilterChanged(const QString &text);
     void onGroupButton(int button_id);
     void tabWidgetCurrentChanged();
-    void onFilterChanged(const QString &text);
 
 private:
     Ui::MainWindow *ui;
     Cmd *cmd;
     QButtonGroup *buttonGroup;
+    bool localegenChanged {false};
+    int countEnabled {};
 
     [[nodiscard]] QString getCurrentLang() const;
     void disableAllButCurrent();
     void displayLocalesGen();
+    void localeGen();
     void setButtons();
     void setConnections();
     void setSubvariables();
