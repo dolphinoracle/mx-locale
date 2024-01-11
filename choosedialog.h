@@ -28,6 +28,5 @@ private:
     Ui::chooseDialog *ui;
     Cmd *cmd;
     QHash<QString, QString> localeLib;
-    QString value;
     QStringList localeList;
 };

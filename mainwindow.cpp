@@ -53,12 +53,10 @@ MainWindow::~MainWindow()
 void MainWindow::setup()
 {
     cmd = new Cmd(this);
-    cmdprog = new Cmd(this);
-    connect(qApp, &QApplication::aboutToQuit, this, &MainWindow::cleanup);
+    connect(QApplication::instance(), &QApplication::aboutToQuit, this, &MainWindow::cleanup);
     this->setWindowTitle("MX Locale");
     ui->tabWidget->setCurrentIndex(0);
     ui->buttonCancel->setEnabled(true);
-    height = this->heightMM();
     getCurrentLang();
     setSubvariables();
     setButtons();

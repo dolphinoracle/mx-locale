@@ -55,11 +55,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Cmd *cmd;
-    Cmd *cmdprog;
     QButtonGroup *buttonGroup;
-    QString device;
-    QString label;
-    int height;
 
     void setButtons();
 };
