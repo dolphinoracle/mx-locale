@@ -183,7 +183,7 @@ void MainWindow::on_buttonLocale_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->buttonLocale->setText(dialog.selection().section('\t', 0, 0));
+        ui->buttonLocale->setText(dialog.selection().section('\t', 0, 0).trimmed());
         setSubvariables();
     }
 }
@@ -193,7 +193,7 @@ void MainWindow::on_pushButtonCType_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonCType->setText(dialog.selection().section('\t', 0, 0));
+        ui->pushButtonCType->setText(dialog.selection().section('\t', 0, 0).trimmed());
     }
 }
 
@@ -202,7 +202,7 @@ void MainWindow::on_pushButtonNumeric_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonNumeric->setText(dialog.selection().section('\t', 0, 0));
+        ui->pushButtonNumeric->setText(dialog.selection().section('\t', 0, 0).trimmed());
     }
 }
 
@@ -211,7 +211,7 @@ void MainWindow::on_pushButtonTime_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonTime->setText(dialog.selection().section('\t', 0, 0));
+        ui->pushButtonTime->setText(dialog.selection().section('\t', 0, 0).trimmed());
     }
 }
 
@@ -220,7 +220,7 @@ void MainWindow::on_pushButtonCollate_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonCollate->setText(dialog.selection().section('\t', 0, 0));
+        ui->pushButtonCollate->setText(dialog.selection().section('\t', 0, 0).trimmed());
     }
 }
 
@@ -229,7 +229,7 @@ void MainWindow::on_pushButtonMonetary_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonMonetary->setText(dialog.selection().section('\t', 0, 0));
+        ui->pushButtonMonetary->setText(dialog.selection().section('\t', 0, 0).trimmed());
     }
 }
 
@@ -238,7 +238,7 @@ void MainWindow::on_pushButtonMessages_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonMessages->setText(dialog.selection().section('\t', 0, 0));
+        ui->pushButtonMessages->setText(dialog.selection().section('\t', 0, 0).trimmed());
     }
 }
 
@@ -247,7 +247,7 @@ void MainWindow::on_pushButtonPaper_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonPaper->setText(dialog.selection().section('\t', 0, 0));
+        ui->pushButtonPaper->setText(dialog.selection().section('\t', 0, 0).trimmed());
     }
 }
 
@@ -265,7 +265,7 @@ void MainWindow::on_pushButtonAddress_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonAddress->setText(dialog.selection().section('\t', 0, 0));
+        ui->pushButtonAddress->setText(dialog.selection().section('\t', 0, 0).trimmed());
     }
 }
 
@@ -274,7 +274,7 @@ void MainWindow::on_pushButtonTelephone_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonTelephone->setText(dialog.selection().section('\t', 0, 0));
+        ui->pushButtonTelephone->setText(dialog.selection().section('\t', 0, 0).trimmed());
     }
 }
 
@@ -283,7 +283,7 @@ void MainWindow::on_pushButtonMeasurement_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonMeasurement->setText(dialog.selection().section('\t', 0, 0));
+        ui->pushButtonMeasurement->setText(dialog.selection().section('\t', 0, 0).trimmed());
     }
 }
 
@@ -292,6 +292,6 @@ void MainWindow::on_pushButtonIdentification_clicked()
     chooseDialog dialog;
     dialog.setModal(true);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->pushButtonIdentification->setText(dialog.selection().section('\t', 0, 0));
+        ui->pushButtonIdentification->setText(dialog.selection().section('\t', 0, 0).trimmed());
     }
 }
