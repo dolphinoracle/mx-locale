@@ -97,7 +97,7 @@ void MainWindow::aboutClicked()
     displayAboutMsgBox(tr("About %1").arg(this->windowTitle()),
                        "<p align=\"center\"><b><h2>" + this->windowTitle() + "</h2></b></p><p align=\"center\">"
                            + tr("Version: ") + VERSION + "</p><p align=\"center\"><h3>"
-                           + tr("Program for formatting USB devices")
+                           + tr("Program for changing language and locale variables")
                            + "</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br "
                              "/></p><p align=\"center\">"
                            + tr("Copyright (c) MX Linux") + "<br /><br /></p>",
