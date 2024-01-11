@@ -53,10 +53,11 @@ void chooseDialog::buildLocaleList()
     libFile.close();
 
     for (const auto &locale : availableLocales) {
-        QString item = locale.section(".utf8", 0, 0);
+        QString item = locale;
+        item.remove(QRegularExpression("\\..*$"));
         QString line = locale;
         if (localeLib.contains(item)) {
-            line.append("\t" + localeLib.value(item));
+            line.append("                 \t" + localeLib.value(item));
         }
         localeList << line;
         ui->listWidgetAvailableLocales->addItem(line);

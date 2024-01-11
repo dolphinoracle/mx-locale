@@ -7,6 +7,7 @@ class QTextStream;
 class Cmd : public QProcess
 {
     Q_OBJECT
+
 public:
     explicit Cmd(QObject *parent = nullptr);
 
