@@ -38,7 +38,7 @@ class MainWindow;
 namespace ButtonID
 {
 enum {
-    Address = 1,
+    Address,
     Collate,
     CType,
     Identification,
