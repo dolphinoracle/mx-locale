@@ -49,8 +49,8 @@ public:
 private slots:
     void cleanup();
     void onGroupButton(int button_id);
-    void on_buttonAbout_clicked();
-    void on_buttonHelp_clicked();
+    void aboutClicked();
+    void helpClicked();
 
 private:
     Ui::MainWindow *ui;

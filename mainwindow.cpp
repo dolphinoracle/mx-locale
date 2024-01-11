@@ -80,7 +80,7 @@ void MainWindow::onGroupButton(int button_id)
     }
 }
 
-void MainWindow::on_buttonAbout_clicked()
+void MainWindow::aboutClicked()
 {
     this->hide();
     displayAboutMsgBox(tr("About %1").arg(this->windowTitle()),
@@ -94,7 +94,7 @@ void MainWindow::on_buttonAbout_clicked()
     this->show();
 }
 
-void MainWindow::on_buttonHelp_clicked()
+void MainWindow::helpClicked()
 {
     QString url = "file:///usr/share/doc/mx-locale/help/mx-locale.html";
     displayDoc(url, tr("%1 Help").arg(this->windowTitle()), true);
@@ -164,4 +164,6 @@ void MainWindow::setButtons()
     buttonGroup->addButton(ui->pushButtonTime, 12);
     buttonGroup->addButton(ui->buttonLocale, 13);
     connect(buttonGroup, &QButtonGroup::idClicked, this, &MainWindow::onGroupButton);
+    connect(ui->buttonAbout, &QPushButton::clicked, this, &MainWindow::aboutClicked);
+    connect(ui->buttonHelp, &QPushButton::clicked, this, &MainWindow::helpClicked);
 }
