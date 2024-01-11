@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    if (localegenChanged) {
+    if (localeGenChanged) {
         localeGen();
     }
     delete ui;
@@ -91,7 +91,7 @@ void MainWindow::aboutClicked()
 void MainWindow::applyClicked()
 {
     if (ui->tabWidget->currentWidget() == ui->tabManagement) {
-        if (localegenChanged) {
+        if (localeGenChanged) {
             localeGen();
         }
     }
@@ -113,7 +113,7 @@ QString MainWindow::getCurrentLang() const
 void MainWindow::disableAllButCurrent()
 {
     Cmd().runAsRoot("sed -i \"/^$LANG\\|^#/! s/#*/# /\" /etc/locale.gen");
-    localegenChanged = true;
+    localeGenChanged = true;
     onFilterChanged(ui->comboFilter->currentText());
 }
 
@@ -187,6 +187,9 @@ void MainWindow::tabWidgetCurrentChanged()
         ui->labelCurrentLocale->setText(tr("Locale in use: <b>%1</b>").arg(getCurrentLang()));
         displayLocalesGen();
     }
+    if (localeGenChanged) {
+        localeGen();
+    }
 }
 
 void MainWindow::onFilterChanged(const QString &text)
@@ -207,7 +210,7 @@ void MainWindow::onFilterChanged(const QString &text)
 void MainWindow::listItemChanged(QListWidgetItem *item)
 {
     ui->listWidget->disconnect();
-    localegenChanged = true;
+    localeGenChanged = true;
     if (item->checkState() == Qt::Checked) {
         QString uncommentedText = item->text().remove(QRegularExpression("^# "));
         Cmd().runAsRoot("sed -i 's/" + item->text() + "/" + uncommentedText + "/' /etc/locale.gen");
@@ -256,9 +259,11 @@ void MainWindow::displayLocalesGen()
 
 void MainWindow::localeGen()
 {
+    ui->tabWidget->setDisabled(true);
     QProgressDialog prog("Updating locales, please wait", nullptr, 0, countEnabled + 1);
     connect(cmd, &Cmd::outputAvailable, this, [&prog] { prog.setValue(prog.value() + 1); });
     prog.show();
     cmd->runAsRoot("locale-gen");
-    localegenChanged = false;
+    localeGenChanged = false;
+    ui->tabWidget->setDisabled(false);
 }

@@ -76,7 +76,7 @@ private:
     Ui::MainWindow *ui;
     Cmd *cmd;
     QButtonGroup *buttonGroup;
-    bool localegenChanged {false};
+    bool localeGenChanged {false};
     int countEnabled {};
 
     [[nodiscard]] QString getCurrentLang() const;
