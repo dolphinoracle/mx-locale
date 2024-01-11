@@ -97,11 +97,7 @@ void MainWindow::getCurrentLang()
 
     if (QFileInfo::exists("/etc/default/locale")) {
         QSettings defaultlocale("/etc/default/locale", QSettings::NativeFormat);
-        QString lang = defaultlocale.value("LANG").toString();
-        if (lang.isEmpty()) {
-            lang = "C";
-        }
-
+        QString lang = defaultlocale.value("LANG", "C").toString();
         ui->buttonLocale->setText(lang);
     }
 }
